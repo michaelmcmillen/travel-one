@@ -1,7 +1,8 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Arial Unicode MS", sans-serif;
 }
 
 #currency {
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
+    font-family: Tahoma, Helvetica, "Arial Unicode MS", sans-serif;
 }

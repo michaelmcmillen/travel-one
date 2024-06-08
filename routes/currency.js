@@ -3,11 +3,13 @@ var router = express.Router();
 
 /* GET currency listing. */
 router.get('/countryCurrency/:country', function(req, res, db) {
-  req.db.select('currency')
-  .from('country')
-  .where({
-    country: req.params.country
-  })
+  req.db.select('symbol')
+  .from('currency')
+  .where('currency', 'in', function() {
+    this.select('currency')
+        .from('country')
+        .where('country', req.params.country);
+      })
   .then(response => {
     res.send(response)
   })
