@@ -3,12 +3,20 @@ var goBtn = document.getElementById('go-btn');
 goBtn.addEventListener('click', go);
 
 let currencySymbol = document.getElementById('currencySymbol');
+let currency = document.getElementById('currency');
 
 function go() {
-    fetch(`http://localhost:3000/currency/countryCurrency/${countryInput.value}`)
+    let country = countryInput.value;
+    getCurrencySymbol(country);
+    getCurrency(country)
+};
+
+function getCurrencySymbol(country) {
+    fetch(`http://localhost:3000/currency/${country}`)
         .then(response => response.json())
-        .then(resp => resp[0].symbol)
-        .then(symbol => {
+        .then(countryData => {
+            // Get currency symbol
+            symbol = countryData[0].symbol;
             let symArray = []
             if (symbol.indexOf(',') > -1) {
                 symArray = symbol.split(',');
@@ -22,5 +30,11 @@ function go() {
                 currencySymbol.textContent = String.fromCharCode(parseInt(symbol, 16));
             };
         })
-};
+}
+
+function getCurrency(country) {
+    fetch(`http://localhost:3000/country/${country}`)
+        .then(response => response.json())
+        .then(countryData => currency.textContent = countryData[0].currency);
+        };
 

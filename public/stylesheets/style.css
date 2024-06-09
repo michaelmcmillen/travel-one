@@ -4,6 +4,13 @@ body {
 }
 
 #currency {
-    /* text-transform: capitalize; */
     font-family: Tahoma, Helvetica, "Arial Unicode MS", sans-serif;
+}
+
+.inline-label {
+    font-weight: bold;
+}
+
+span {
+    text-transform: capitalize;
 }

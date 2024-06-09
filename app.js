@@ -18,6 +18,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 var usersRouter = require('./routes/users');
 var currencyRouter = require('./routes/currency');
+var countryRouter = require('./routes/country');
 
 app.use((req, res, next) => {
   req.db = db; // Attach db object to the request
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 
 app.use('/users', usersRouter);
 app.use('/currency', currencyRouter);
+app.use('/country', countryRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

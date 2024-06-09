@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 /* GET currency listing. */
-router.get('/countryCurrency/:country', function(req, res, db) {
+router.get('/:country', function(req, res, db) {
   req.db.select('symbol')
   .from('currency')
   .where('currency', 'in', function() {
