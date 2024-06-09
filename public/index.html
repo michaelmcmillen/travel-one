@@ -9,28 +9,32 @@
             crossorigin="anonymous">
         <link rel="stylesheet" href="./stylesheets/style.css">
         <style>
-            *:focus {
-                box-shadow: none !important;
-            }
+            *:focus {box-shadow: none !important;}
         </style>
     </head>
-
     <body>
         <div
             class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
             <div class="container text-center">
-                <div class="row">
-                    <div class="col"></div>
-                    <div class="col-8">
-                        <div class="input-group flex-nowrap">
-                            <span class="input-group-text" id="addon-wrapping">Country: </span>
-                            <input id="country-input" type="text" class="form-control" placeholder aria-label="Username" aria-describedby="addon-wrapping">
-                            <button id="go-btn" type="button" class="btn btn-primary">Go</button>
+                <div class="container text-center">
+                    <div class="row row-cols-2 row-cols-lg-1 g-2 g-lg-3">
+                        <div class="col">
                         </div>
-                        <p id="currency">Currency Symbol</p>
+                        <div class="col">
+                            <div class="p-3">
+                                <div class="input-group flex-nowrap">
+                                    <span class="input-group-text" id="addon-wrapping">Country: </span>
+                                    <input id="country-input" type="text" class="form-control" placeholder aria-label="Country" aria-describedby="addon-wrapping">
+                                    <button id="go-btn" type="button" class="btn btn-primary">Go</button>
+                                </div>
+                            </div>
+                            <div class="p-1">
+                                <p id="currencySymbol">Currency Symbol</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                        </div>
                     </div>
-                    <div class="col"></div>
-
                 </div>
             </div>
         </div>
