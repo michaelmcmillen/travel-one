@@ -14,3 +14,7 @@ body {
 span {
     text-transform: capitalize;
 }
+
+#exchange-feat {
+    display: none;
+}
