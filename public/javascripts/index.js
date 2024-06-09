@@ -1,6 +1,14 @@
 var countryInput = document.getElementById('country-input');
 var goBtn = document.getElementById('go-btn');
-goBtn.addEventListener('click', go);
+goBtn.addEventListener('click', function() {
+    go(countryInput.value)
+});
+
+var exchangeInput = document.getElementById('exchange-input');
+var exchangeBtn = document.getElementById('exchange-btn');
+exchangeBtn.addEventListener('click', function() {
+    exchangeRate(countryInput.value, exchangeInput.value)
+});
 
 let currencySymbol = document.getElementById('currencySymbol');
 let currencyValue = document.getElementById('currency');
@@ -9,8 +17,7 @@ let population = document.getElementById('population');
 let capitalCity = document.getElementById('capitalCity');
 let exchangeFeat = document.getElementById('exchange-feat');
 
-function go() {
-    let country = countryInput.value;
+function go(country) {
     getCurrencySymbol(country)
     getCountry(country)
     .then(
@@ -22,7 +29,6 @@ function go() {
         }
     )
     .then(resp => displayExchangeFeat());
-    
 };
 
 function getCurrencySymbol(country) {
@@ -54,9 +60,19 @@ async function getCountry(country) {
 
 function displayExchangeFeat() {
     if (currencyValue.textContent) {
-        exchangeFeat.style.display = 'block';
+        exchangeFeat.style.visibility = 'visible';
     }
-    else {
-        console.log("HUH")
-    }
+}
+
+async function exchangeRate(countryOne, countryTwo) {
+    let searchCountryCode = await currencyCode(countryOne);
+    let exchangeCountryCode = await currencyCode(countryTwo);
+    const response = await fetch(`http://localhost:3000/exchange/${searchCountryCode}/${exchangeCountryCode}`);
+    return response;
+}
+
+async function currencyCode(country) {
+    const response = await fetch(`http://localhost:3000/currency/code/${country}`);
+    const currencyCode = await response.json();
+    return currencyCode[0].code;
 }

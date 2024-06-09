@@ -15,4 +15,18 @@ router.get('/:country', function(req, res, db) {
   })
 });
 
+/* GET currency code listing. */
+router.get('/code/:country', function(req, res, db) {
+  req.db.select('code')
+  .from('currency')
+  .where('currency', 'in', function() {
+    this.select('currency')
+        .from('country')
+        .where('country', req.params.country);
+      })
+  .then(response => {
+    res.send(response)
+  })
+});
+
 module.exports = router;
