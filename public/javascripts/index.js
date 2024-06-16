@@ -20,7 +20,12 @@ let currencyValue = document.getElementById('currency');
 let continent = document.getElementById('continent');
 let population = document.getElementById('population');
 let capitalCity = document.getElementById('capitalCity');
-let exchangeFeat = document.getElementById('exchange-feat');
+let exchangeSearch = document.getElementById('exchange-feat');
+let exchangeResults = document.getElementById('exchange-results');
+let city1 = document.getElementById('city1');
+let city2 = document.getElementById('city2');
+let city1Rate = document.getElementById('city1Rate');
+let city2Rate = document.getElementById('city2Rate');
 
 go = (country) => {
     getCurrencySymbol(country)
@@ -33,7 +38,7 @@ go = (country) => {
             capitalCity.textContent = countryData[0].capital;
         }
     )
-    .then(resp => displayExchangeFeat());
+    .then(resp => displayEl(exchangeSearch));
 };
 
 getCurrencySymbol = (country) => {
@@ -49,7 +54,7 @@ getCurrencySymbol = (country) => {
                 for (let i = 0; i < symArray.length; i++) {
                     renderedSymbol = renderedSymbol + String.fromCharCode(parseInt(symArray[i], 16));
                 }
-                currencySymbol.textContent = renderedSymbol
+                c
             }
             else {
                 currencySymbol.textContent = String.fromCharCode(parseInt(symbol, 16));
@@ -63,9 +68,9 @@ getCountry = async (country) => {
     return countryData;
 }
 
-displayExchangeFeat = () => {
+displayEl = (el) => {
     if (currencyValue.textContent) {
-        exchangeFeat.style.visibility = 'visible';
+        el.style.visibility = 'visible';
     }
 }
 
@@ -73,7 +78,11 @@ exchangeRate = async (countryOne, countryTwo) => {
     let searchCountryCode = await currencyCode(countryOne);
     let exchangeCountryCode = await currencyCode(countryTwo);
     const response = await fetch(`http://localhost:3000/exchange/${searchCountryCode}/${exchangeCountryCode}`);
-    return response;
+    exchangeDatObj = await response.json().then(displayEl(exchangeResults));
+    city1.textContent = `${countryOne} (${searchCountryCode})`;
+    city2.textContent = `${countryTwo} (${exchangeCountryCode})`;
+    city1Rate.textContent = exchangeDatObj.rates[searchCountryCode];
+    city2Rate.textContent = exchangeDatObj.rates[exchangeCountryCode].toFixed(4);;
 }
 
 currencyCode = async (country) => {

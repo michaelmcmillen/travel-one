@@ -15,6 +15,6 @@ span {
     text-transform: capitalize;
 }
 
-#exchange-feat {
+#exchange-feat, #exchange-results{
     visibility: hidden;
 }
