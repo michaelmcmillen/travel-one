@@ -1,8 +1,13 @@
+goHandler = (e) => {
+    if (e.type === 'click' || (e.type === 'keydown' && e.key === 'Enter')) {
+        go(countryInput.value)
+    }
+}
+
 var countryInput = document.getElementById('country-input');
 var goBtn = document.getElementById('go-btn');
-goBtn.addEventListener('click', function() {
-    go(countryInput.value)
-});
+goBtn.addEventListener('click', goHandler);
+goBtn.addEventListener('keydown', goHandler);
 
 var exchangeInput = document.getElementById('exchange-input');
 var exchangeBtn = document.getElementById('exchange-btn');
@@ -17,7 +22,7 @@ let population = document.getElementById('population');
 let capitalCity = document.getElementById('capitalCity');
 let exchangeFeat = document.getElementById('exchange-feat');
 
-function go(country) {
+go = (country) => {
     getCurrencySymbol(country)
     getCountry(country)
     .then(
@@ -31,7 +36,7 @@ function go(country) {
     .then(resp => displayExchangeFeat());
 };
 
-function getCurrencySymbol(country) {
+getCurrencySymbol = (country) => {
     fetch(`http://localhost:3000/currency/${country}`)
         .then(response => response.json())
         .then(countryData => {
@@ -52,26 +57,26 @@ function getCurrencySymbol(country) {
         })
 }
 
-async function getCountry(country) {
+getCountry = async (country) => {
     const response = await fetch(`http://localhost:3000/country/${country}`);
     const countryData = await response.json();
     return countryData;
 }
 
-function displayExchangeFeat() {
+displayExchangeFeat = () => {
     if (currencyValue.textContent) {
         exchangeFeat.style.visibility = 'visible';
     }
 }
 
-async function exchangeRate(countryOne, countryTwo) {
+exchangeRate = async (countryOne, countryTwo) => {
     let searchCountryCode = await currencyCode(countryOne);
     let exchangeCountryCode = await currencyCode(countryTwo);
     const response = await fetch(`http://localhost:3000/exchange/${searchCountryCode}/${exchangeCountryCode}`);
     return response;
 }
 
-async function currencyCode(country) {
+currencyCode = async (country) => {
     const response = await fetch(`http://localhost:3000/currency/code/${country}`);
     const currencyCode = await response.json();
     return currencyCode[0].code;
