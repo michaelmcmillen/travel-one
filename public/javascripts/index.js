@@ -48,7 +48,7 @@ goCountry = (country) => {
             capitalCity.textContent = countryData[0].capital;
         }
     )
-    .then(() => displayEl(exchangeSearch));
+    .then(() => displayExchangeEl(exchangeSearch));
 };
 
 // Func to get currency symbol in its correct format
@@ -75,13 +75,16 @@ getCurrencySymbol = (country) => {
         })
 }
 
+// Get all country data
 getCountry = async (country) => {
     const response = await fetch(`http://localhost:3000/country/${country}`);
     const countryData = await response.json();
     return countryData;
 }
 
-displayEl = (el) => {
+// Displays 'exchange to' input box only if a prior country has been searched
+// and has its currency populated
+displayExchangeEl = (el) => {
     if (currencyValue.textContent) {
         el.style.visibility = 'visible';
     }
@@ -91,7 +94,7 @@ exchangeRate = async (countryOne, countryTwo) => {
     let searchCountryCode = await currencyCode(countryOne);
     let exchangeCountryCode = await currencyCode(countryTwo);
     const response = await fetch(`http://localhost:3000/exchange/${searchCountryCode}/${exchangeCountryCode}`);
-    exchangeDatObj = await response.json().then(displayEl(exchangeResults));
+    exchangeDatObj = await response.json().then(displayExchangeEl(exchangeResults));
     city1.textContent = `${countryOne} (${searchCountryCode})`;
     city2.textContent = `${countryTwo} (${exchangeCountryCode})`;
     city1Rate.textContent = exchangeDatObj.rates[searchCountryCode];
