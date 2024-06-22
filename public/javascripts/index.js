@@ -10,11 +10,17 @@ var goBtn = document.getElementById('go-btn');
 goBtn.addEventListener('click', goHandler);
 countryInput.addEventListener('keydown', goHandler);
 
+// Execute 'exchangeRate' func when exchange to button is clicked or Enter is selected
+exchangeHandler = (e) => {
+    if (e.type === 'click' || (e.type === 'keydown' && e.key === 'Enter' && document.activeElement === exchangeInput)) {
+        exchangeRate(countryInput.value, exchangeInput.value)
+    }
+}
+
 var exchangeInput = document.getElementById('exchange-input');
 var exchangeBtn = document.getElementById('exchange-btn');
-exchangeBtn.addEventListener('click', function() {
-    exchangeRate(countryInput.value, exchangeInput.value)
-});
+exchangeBtn.addEventListener('click', exchangeHandler);
+exchangeInput.addEventListener('keydown', exchangeHandler);
 
 let currencySymbol = document.getElementById('currencySymbol');
 let currencyValue = document.getElementById('currency');
