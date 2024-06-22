@@ -51,21 +51,24 @@ goCountry = (country) => {
     .then(() => displayEl(exchangeSearch));
 };
 
+// Func to get currency symbol in its correct format
 getCurrencySymbol = (country) => {
     fetch(`http://localhost:3000/currency/${country}`)
         .then(response => response.json())
         .then(countryData => {
-            // Get currency symbol
             symbol = countryData[0].symbol;
             let symArray = []
+            // Some currency symbols are made of multiple hex values
+            // If they are, split them, convert and concatenate
             if (symbol.indexOf(',') > -1) {
                 symArray = symbol.split(',');
                 let renderedSymbol = '';
                 for (let i = 0; i < symArray.length; i++) {
                     renderedSymbol = renderedSymbol + String.fromCharCode(parseInt(symArray[i], 16));
                 }
-                c
+                currencySymbol.textContent = renderedSymbol;
             }
+            // For single hex value currency symbols
             else {
                 currencySymbol.textContent = String.fromCharCode(parseInt(symbol, 16));
             };
