@@ -1,2 +1,3 @@
 node_modules
-sql_statements.txt
+scripts/helper**
+data/
