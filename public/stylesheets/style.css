@@ -18,3 +18,5 @@ span {
 #exchange-feat, #exchange-results{
     visibility: hidden;
 }
+
+*:focus {box-shadow: none !important;}
