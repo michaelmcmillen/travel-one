@@ -1,15 +1,15 @@
-// Execute 'getCountry' func when country go button is clicked or Enter is selected
-getCountryHandler = (e) => {
+// Execute 'goCountry' func when country go button is clicked or Enter is selected
+goCountryHandler = (e) => {
     if (e.type === 'click' || (e.type === 'keydown' && e.key === 'Enter' && document.activeElement === countryInput)) {
-        getCountry(countryInput.value)
+        goCountry(countryInput.value)
     }
 }
 
 // Setup country input elements
 var countryInput = document.getElementById('country-input');
-var getCountryBtn = document.getElementById('go-btn');
-getCountryBtn.addEventListener('click', getCountryHandler);
-countryInput.addEventListener('keydown', getCountryHandler);
+var goCountryBtn = document.getElementById('go-btn');
+goCountryBtn.addEventListener('click', goCountryHandler);
+countryInput.addEventListener('keydown', goCountryHandler);
 
 // Execute 'exchangeRate' func when exchange to button is clicked or Enter is selected
 exchangeHandler = (e) => {
@@ -37,7 +37,7 @@ let city1Rate = document.getElementById('city1Rate');
 let city2Rate = document.getElementById('city2Rate');
 
 // Func to get country data
-getCountry = (country) => {
+goCountry = (country) => {
     getCurrencySymbol(country)
     getCountry(country)
     .then(
@@ -48,7 +48,7 @@ getCountry = (country) => {
             capitalCity.textContent = countryData[0].capital;
         }
     )
-    .then(resp => displayEl(exchangeSearch));
+    .then(() => displayEl(exchangeSearch));
 };
 
 getCurrencySymbol = (country) => {
