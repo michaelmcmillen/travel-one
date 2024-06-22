@@ -111,6 +111,7 @@ exchangeRate = async (countryOne, countryTwo) => {
     }
 }
 
+// Get countrys currency code
 currencyCode = async (country) => {
     const response = await fetch(`http://localhost:3000/currency/code/${country}`);
     const currencyCode = await response.json();

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET country listing. */
+// GET country data
 router.get('/:country', function(req, res, db) {
   req.db.select('*')
   .from('country')

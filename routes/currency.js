@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET currency listing. */
+// GET currency
 router.get('/:country', function(req, res, db) {
   req.db.select('symbol')
   .from('currency')
@@ -15,7 +15,7 @@ router.get('/:country', function(req, res, db) {
   })
 });
 
-/* GET currency code listing. */
+// GET currency code
 router.get('/code/:country', function(req, res, db) {
   req.db.select('code')
   .from('currency')

@@ -6,7 +6,7 @@ var logger = require('morgan');
 
 var app = express();
 
-// view engine setup
+// View engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -16,6 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Setup routes
 var usersRouter = require('./routes/users');
 var currencyRouter = require('./routes/currency');
 var countryRouter = require('./routes/country');
@@ -27,6 +28,7 @@ app.use((req, res, next) => {
   next();
 });
 
+// Endpoints
 app.use('/users', usersRouter);
 app.use('/currency', currencyRouter);
 app.use('/country', countryRouter);
@@ -43,7 +45,7 @@ const db = require('knex')({
   }
 });
 
-// Catch 404's and forward to error handler
+// Catch 404s and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
