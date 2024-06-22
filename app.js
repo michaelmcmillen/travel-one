@@ -21,9 +21,10 @@ var currencyRouter = require('./routes/currency');
 var countryRouter = require('./routes/country');
 var exchangeRouter = require('./routes/exchange');
 
+// Attach DB to all requests
 app.use((req, res, next) => {
-  req.db = db; // Attach db object to the request
-  next(); // Call the next middleware
+  req.db = db;
+  next();
 });
 
 app.use('/users', usersRouter);
@@ -31,12 +32,7 @@ app.use('/currency', currencyRouter);
 app.use('/country', countryRouter);
 app.use('/exchange', exchangeRouter);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-//Setup DB connection
+// Setup DB connection
 const db = require('knex')({
   client: 'pg',
   connection: {
@@ -47,13 +43,18 @@ const db = require('knex')({
   }
 });
 
-// error handler
+// Catch 404's and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
+
+// Error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
+  // Render the error page
   res.status(err.status || 500);
   res.render('error');
 });

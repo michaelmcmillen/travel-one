@@ -1,5 +1,6 @@
+// Execute 'go' func when country go button is clicked or Enter is selected
 goHandler = (e) => {
-    if (e.type === 'click' || (e.type === 'keydown' && e.key === 'Enter')) {
+    if (e.type === 'click' || (e.type === 'keydown' && e.key === 'Enter' && document.activeElement === countryInput)) {
         go(countryInput.value)
     }
 }
@@ -7,7 +8,7 @@ goHandler = (e) => {
 var countryInput = document.getElementById('country-input');
 var goBtn = document.getElementById('go-btn');
 goBtn.addEventListener('click', goHandler);
-goBtn.addEventListener('keydown', goHandler);
+countryInput.addEventListener('keydown', goHandler);
 
 var exchangeInput = document.getElementById('exchange-input');
 var exchangeBtn = document.getElementById('exchange-btn');
