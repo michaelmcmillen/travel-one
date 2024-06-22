@@ -1,14 +1,15 @@
-// Execute 'go' func when country go button is clicked or Enter is selected
-goHandler = (e) => {
+// Execute 'getCountry' func when country go button is clicked or Enter is selected
+getCountryHandler = (e) => {
     if (e.type === 'click' || (e.type === 'keydown' && e.key === 'Enter' && document.activeElement === countryInput)) {
-        go(countryInput.value)
+        getCountry(countryInput.value)
     }
 }
 
+// Setup country input elements
 var countryInput = document.getElementById('country-input');
-var goBtn = document.getElementById('go-btn');
-goBtn.addEventListener('click', goHandler);
-countryInput.addEventListener('keydown', goHandler);
+var getCountryBtn = document.getElementById('go-btn');
+getCountryBtn.addEventListener('click', getCountryHandler);
+countryInput.addEventListener('keydown', getCountryHandler);
 
 // Execute 'exchangeRate' func when exchange to button is clicked or Enter is selected
 exchangeHandler = (e) => {
@@ -17,6 +18,7 @@ exchangeHandler = (e) => {
     }
 }
 
+// Setup exchange country elements
 var exchangeInput = document.getElementById('exchange-input');
 var exchangeBtn = document.getElementById('exchange-btn');
 exchangeBtn.addEventListener('click', exchangeHandler);
@@ -34,7 +36,8 @@ let city2 = document.getElementById('city2');
 let city1Rate = document.getElementById('city1Rate');
 let city2Rate = document.getElementById('city2Rate');
 
-go = (country) => {
+// Func to get country data
+getCountry = (country) => {
     getCurrencySymbol(country)
     getCountry(country)
     .then(
