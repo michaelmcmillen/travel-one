@@ -31,10 +31,10 @@ let population = document.getElementById('population');
 let capitalCity = document.getElementById('capitalCity');
 let exchangeSearch = document.getElementById('exchange-feat');
 let exchangeResults = document.getElementById('exchange-results');
-let city1 = document.getElementById('city1');
-let city2 = document.getElementById('city2');
-let city1Rate = document.getElementById('city1Rate');
-let city2Rate = document.getElementById('city2Rate');
+let country1 = document.getElementById('country1');
+let country2 = document.getElementById('country2');
+let country1Rate = document.getElementById('country1Rate');
+let country2Rate = document.getElementById('country2Rate');
 
 // Func to get country data
 goCountry = (country) => {
@@ -90,15 +90,25 @@ displayExchangeEl = (el) => {
     }
 }
 
+// Perform exchange rate req with 2 country's provided
+// Returns a conversion of th first country's value of 1, to the second country's equivelant value
 exchangeRate = async (countryOne, countryTwo) => {
     let searchCountryCode = await currencyCode(countryOne);
     let exchangeCountryCode = await currencyCode(countryTwo);
     const response = await fetch(`http://localhost:3000/exchange/${searchCountryCode}/${exchangeCountryCode}`);
-    exchangeDatObj = await response.json().then(displayExchangeEl(exchangeResults));
-    city1.textContent = `${countryOne} (${searchCountryCode})`;
-    city2.textContent = `${countryTwo} (${exchangeCountryCode})`;
-    city1Rate.textContent = exchangeDatObj.rates[searchCountryCode];
-    city2Rate.textContent = exchangeDatObj.rates[exchangeCountryCode].toFixed(4);;
+    exchangeDatObj = await response.json();
+    displayExchangeEl(exchangeResults);
+    country1.textContent = `${countryOne} (${searchCountryCode})`;
+    country2.textContent = `${countryTwo} (${exchangeCountryCode})`;
+    country1Rate.textContent = exchangeDatObj.rates[searchCountryCode];
+    convertedValue = exchangeDatObj.rates[exchangeCountryCode].toFixed(4);
+    // Round up country2 value to 1 if conversion is 1:1
+    if (convertedValue == '1.0000') {
+        country2Rate.textContent = '1';
+    }
+    else {
+        country2Rate.textContent = convertedValue;
+    }
 }
 
 currencyCode = async (country) => {
