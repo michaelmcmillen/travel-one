@@ -16,7 +16,7 @@ Description of project...
 
 ## Introduction
 
-Project intro...
+The travel-one project looks to develop a continuously growing application and the CI/CD pipeline around it. The project is less to do about a feature rich application (however this will come with time), and more around the containerisation, deployment and automated testing around it.
 
 ## Setup
 
@@ -24,12 +24,23 @@ Project intro...
 
 - Node.js
 - npm (Node Package Manager)
+- express
+- knex
+- pg
+- cookie-parser
+- debug
+- PostgreSQL
 
 ### Installation
 
 1. Clone the repository:
     ```bash
-    git clone ...
+    <!-- Clone using the web URL -->
+    git clone https://github.com/michaelmcmillen/travel-one.git
+    ```
+    ```bash
+    <!-- Use a password-protected SSH key -->
+    git clone git@github.com:michaelmcmillen/travel-one.git
     ```
 2. Navigate to the project directory:
     ```bash
@@ -53,21 +64,31 @@ Project intro...
 ### Testing the Client
 
 1. Open `http://localhost:3000` in your web browser.
-2. Other steps...
 
 ## Project Structure
 
+```bash
 travel-one/
-├── index.html
-├── package.json
-├── README.md
-└── server.js
-
-- `index.html`: The client-side HTML file ...
-- `server.js`: The Express server file.
-- `package.json`: The project configuration file, including dependencies.
-- `README.md`: This README file.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+  |-- README.md
+  |-- app.js
+  |-- data
+  |   |-- countries_data.csv
+  |   |-- currencies.csv
+  |-- package-lock.json
+  |-- package.json
+  |-- public
+  |   |-- index.html
+  |   |-- javascripts
+  |   |   `-- index.js
+  |   |-- stylesheets
+  |       |-- style.css
+  |-- routes
+  |   |-- country.js
+  |   |-- currency.js
+  |   |-- exchange.js
+  |   |-- index.js
+  |   |-- users.js
+  |-- scripts
+      |-- country-csv.py
+      |-- currency-csv.py
+```
