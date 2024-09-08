@@ -12,7 +12,6 @@ Description of project...
   - [Running the Server](#running-the-server)
   - [Testing the Client](#testing-the-client)
 - [Project Structure](#project-structure)
-- [License](#license)
 
 ## Introduction
 
@@ -79,7 +78,7 @@ travel-one/
   |-- public
   |   |-- index.html
   |   |-- javascripts
-  |   |   `-- index.js
+  |   |   |-- index.js
   |   |-- stylesheets
   |       |-- style.css
   |-- routes
