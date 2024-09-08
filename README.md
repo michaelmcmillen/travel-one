@@ -21,14 +21,21 @@ A following country input, allows the user to view the currency conversion i.e. 
 
 ### Prerequisites
 
-- Node.js
-- npm (Node Package Manager)
+Depending on how you execute/run this, the below packages are required. The installation steps below will see these installed through <code>npm install</code>
+
 - express
 - knex
 - pg
 - cookie-parser
 - debug
+- nodemon
+
+Installation required locally:
+
+- Node.js
+- npm (Node Package Manager)
 - PostgreSQL
+- Docker
 
 ### Installation
 
@@ -90,4 +97,5 @@ travel-one/
   |-- scripts
       |-- country-csv.py
       |-- currency-csv.py
+  |-- Dockerfile
 ```
