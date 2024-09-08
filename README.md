@@ -1,7 +1,3 @@
-# Travel One Project
-
-Description of project...
-
 ## Table of Contents
 
 - [Introduction](#introduction)
@@ -16,6 +12,10 @@ Description of project...
 ## Introduction
 
 The travel-one project looks to develop a continuously growing application and the CI/CD pipeline around it. The project is less to do about a feature rich application (however this will come with time), and more around the containerisation, deployment and automated testing around it.
+
+As of September 2024, the application provides key information & data i.e. capital, currency, currency symbol etc based on a users search criteria. Country information is stored in a Postgres DB and queried based upon the input country name.
+
+A following country input, allows the user to view the currency conversion i.e. USD 1 = GBR 0.76, based on the original search input, and the second search input. This currency conversion is queried from a request to an external [exchange rate API](https://www.exchangerate-api.com).
 
 ## Setup
 
@@ -34,11 +34,11 @@ The travel-one project looks to develop a continuously growing application and t
 
 1. Clone the repository:
     ```bash
-    <!-- Clone using the web URL -->
+    # Clone using the web URL
     git clone https://github.com/michaelmcmillen/travel-one.git
     ```
     ```bash
-    <!-- Use a password-protected SSH key -->
+    # Use a password-protected SSH key
     git clone git@github.com:michaelmcmillen/travel-one.git
     ```
 2. Navigate to the project directory:
