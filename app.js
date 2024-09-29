@@ -8,6 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+require("dotenv").config();
 
 // Setup routes
 var usersRouter = require('./routes/users');
@@ -27,13 +28,24 @@ app.use('/currency', currencyRouter);
 app.use('/country', countryRouter);
 app.use('/exchange', exchangeRouter);
 
-// Setup DB connection
+// Setup DB connection in container
+// const db = require('knex')({
+//   client: 'pg',
+//   connection: {
+//       host : process.env.DB_HOST,
+//       user : process.env.DB_USER,
+//       password : process.env.DB_PASS,
+//       database : process.env.DB_NAME
+//   }
+// });
+
+// Setup DB connection locally
 const db = require('knex')({
   client: 'pg',
   connection: {
       host : '127.0.0.1',
       user : 'postgres',
-      password : 'postgresPass1',
+      password : 'postgrespassword',
       database : 'travelone'
   }
 });

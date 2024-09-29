@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: travel-one-pg-container
+    environment:
+      POSTGRES_USER: postgres-app-user
+      POSTGRES_PASSWORD: postgres-app-pass
+      POSTGRES_DB: travelone-pg-db-name
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    container_name: express_container
+    environment:
+      DB_HOST: db
+      DB_USER: postgres-app-user
+      DB_PASS: postgres-app-pass
+      DB_NAME: travelone-pg-db-name
+      DB_PORT: 5432
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+volumes:
+  db_data:
