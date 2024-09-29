@@ -7,7 +7,8 @@ services:
       POSTGRES_PASSWORD: postgres-app-pass
       POSTGRES_DB: travelone-pg-db-name
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
+      - ./db_data/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
 
@@ -26,4 +27,4 @@ services:
       - db
 
 volumes:
-  db_data:
+  db:
