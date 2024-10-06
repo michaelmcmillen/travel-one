@@ -29,26 +29,26 @@ app.use('/country', countryRouter);
 app.use('/exchange', exchangeRouter);
 
 // Setup DB connection in container
-// const db = require('knex')({
-//   client: 'pg',
-//   connection: {
-//       host : process.env.DB_HOST,
-//       user : process.env.DB_USER,
-//       password : process.env.DB_PASS,
-//       database : process.env.DB_NAME
-//   }
-// });
-
-// Setup DB connection locally
 const db = require('knex')({
   client: 'pg',
   connection: {
-      host : '127.0.0.1',
-      user : 'postgres',
-      password : 'postgrespassword',
-      database : 'travelone'
+      host : process.env.DB_HOST,
+      user : process.env.DB_USER,
+      password : process.env.DB_PASS,
+      database : process.env.DB_NAME
   }
 });
+
+// Setup DB connection locally
+// const db = require('knex')({
+//   client: 'pg',
+//   connection: {
+//       host : '127.0.0.1',
+//       user : 'postgres',
+//       password : 'postgresPass1',
+//       database : 'travelone'
+//   }
+// });
 
 // Catch 404s and forward to error handler
 app.use(function(req, res, next) {

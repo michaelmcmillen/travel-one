@@ -1,4 +1,22 @@
 services:
+  app:
+      # Build local Dockerfile
+      build: .
+      container_name: express_container
+      environment:
+        DB_HOST: db
+        DB_USER: postgres-app-user
+        DB_PASS: postgres-app-pass
+        DB_NAME: travelone-pg-db-name
+        DB_PORT: 5432
+      volumes:
+        # Shared volume with below PG DB
+        - travelone-data:/travelone/data
+      depends_on:
+      - db
+      ports:
+        - "3000:3000"
+
   db:
     image: postgres:latest
     container_name: travel-one-pg-container
@@ -7,24 +25,12 @@ services:
       POSTGRES_PASSWORD: postgres-app-pass
       POSTGRES_DB: travelone-pg-db-name
     volumes:
-      - db:/var/lib/postgresql/data
+      # Shared volume with Express app
+      - travelone-data:/travelone/data
+      # Initialise DQ when container is run
       - ./db_data/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
 
-  app:
-    build: .
-    container_name: express_container
-    environment:
-      DB_HOST: db
-      DB_USER: postgres-app-user
-      DB_PASS: postgres-app-pass
-      DB_NAME: travelone-pg-db-name
-      DB_PORT: 5432
-    ports:
-      - "3000:3000"
-    depends_on:
-      - db
-
 volumes:
-  db:
+  travelone-data:
