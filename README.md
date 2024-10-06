@@ -1,12 +1,10 @@
 ## Table of Contents
 
 - [Introduction](#introduction)
-- [Setup](#setup)
+- [Running The Application](#running-the-application)
+- [Development Setup](#development-setup)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-- [Usage](#usage)
-  - [Running the Server](#running-the-server)
-  - [Testing the Client](#testing-the-client)
 - [Project Structure](#project-structure)
 
 ## Introduction
