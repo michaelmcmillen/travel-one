@@ -17,7 +17,7 @@ A following country input, allows the user to view the currency conversion i.e. 
 
 ## Running The Application
 
-You can run and use the application as it stands by carrying out the below. Currently the initialisation of the DB will only contain country data. Any requests made for currency data will fail. This will be coming shortly.
+You can run and use the application as it stands by carrying out the below.
 
 1. Clone the repository:
     ```bash
@@ -65,7 +65,7 @@ Installation required locally:
 
 The application requires a Postgres DB to be setup. Currently, for development purposes, you will need to setup your own PG DB, with data and link it to the Express application, for this to work.
 
-In the near future, a provided containerised Postgres DB and data will be available to spin up and point your locally running Express app too.
+In the near future, a provided containerised Postgres DB with data initialised will be available to spin up and point your locally running Express app too (such as how it is done if you ran the compose file).
 
 ### Installation
 
@@ -122,5 +122,5 @@ travel-one/
   |   |-- index.js
   |   |-- users.js
   |-- Dockerfile
-   -- docker-compose.yml
+  |-- docker-compose.yml
 ```

@@ -16,6 +16,7 @@ RUN npm install
 # Run country_data.js script to create country_data.csv data set
 # This is used to populated the PG DB
 RUN node ./db_data/country_data.js
+RUN node ./db_data/currency_data.js
 
 # Make port 3000 available outside this container
 EXPOSE 3000

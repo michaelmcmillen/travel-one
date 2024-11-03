@@ -11,7 +11,7 @@ services:
         DB_PORT: 5432
       volumes:
         # Shared volume with below PG DB
-        - travelone-data:/travelone/data
+        - data:/travelone/data
       depends_on:
       - db
       ports:
@@ -26,11 +26,11 @@ services:
       POSTGRES_DB: travelone-pg-db-name
     volumes:
       # Shared volume with Express app
-      - travelone-data:/travelone/data
+      - data:/travelone/data
       # Initialise DQ when container is run
       - ./db_data/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
 
 volumes:
-  travelone-data:
+  data:

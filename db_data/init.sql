@@ -17,6 +17,15 @@ CREATE TABLE country (
   PRIMARY KEY (id)
 );
 
+-- Create 'currency' table
+CREATE TABLE currency (
+  id SERIAL,
+  currency VARCHAR(100),
+  symbol VARCHAR(20),
+  code VARCHAR(20),
+  PRIMARY KEY (id)
+);
+
 -- Copy data from country_data.csv file into 'country' table
 -- country_data.csv should be created from the execution of country_data.js and
 -- saved in the shared /travelone/data/ volume
@@ -30,5 +39,16 @@ COPY country(
     iso3, 
     flag)
 FROM '/travelone/data/country_data.csv' 
+DELIMITER ','
+CSV HEADER;
+
+-- Copy data from currency_data.csv file into 'currency' table
+-- currency_data.csv should be created from the execution of currency_data.js and
+-- saved in the shared /travelone/data/ volume
+COPY currency(
+    currency, 
+    symbol, 
+    code)
+FROM '/travelone/data/currency_data.csv' 
 DELIMITER ','
 CSV HEADER;
