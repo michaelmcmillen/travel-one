@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Travel One</title>
         <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
             crossorigin="anonymous">
         <link rel="stylesheet" href="./css/style.css">
@@ -18,12 +18,13 @@
                     <input type="text" class="form-control form-control-sm" id="country-input" placeholder="Enter country...">
                     <button type="button" class="btn btn-sm ms-3" id="go-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5"/>
+                            <path fill-rule="evenodd"
+                                d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5" />
                         </svg>
                     </button>
                 </div>
             </div>
-    
+
             <div class="mb-4">
                 <label class="d-block">Continent: <span id="continent"></span></label>
                 <label class="d-block">Currency Symbol: <span id="currencySymbol"></span></label>
@@ -37,79 +38,20 @@
                     <input type="text" class="form-control  form-control-sm" id="exchange-input" placeholder="Exchange too...">
                     <button type="button" class="btn btn-sm ms-3" id="exchange-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5"/>
+                            <path fill-rule="evenodd"
+                                d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5" />
                         </svg>
                     </button>
                 </div>
-                </div>
-                
+            </div>
+
             <div class="mb-4" id="exchange-results">
                 <label class="d-inline" id="country1"></label><span id="country1Rate"></span>
                 =
                 <label class="d-inline" id="country2"></label><span id="country2Rate"></span>
             </div>
         </div>
-    <script src="./js/index.js"></script>
-   </body>
-
-    <!-- <body>
-        <div
-            class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
-                <div class="container text-center">
-                    <div class="row row-cols-1 row-cols-lg-1 g-1 g-lg-3">
-                        <div class="col"></div>
-                        <div class="col">
-                            <div class="p-1">
-                                <div class="input-group flex-nowrap">
-                                    <span class="input-group-text" id="addon-wrapping">Country: </span>
-                                    <input id="country-input" type="text" class="form-control" placeholder aria-label="Country" aria-describedby="addon-wrapping">
-                                    <button id="go-btn" type="button" class="btn btn-primary">Go</button>
-                                </div>
-                            </div>
-                            <div class="p-1">
-                                <label class="inline-label">Continent:</label>
-                                <span id="continent"></span>
-                            </div>
-                            <div class="p-1">
-                                <label class="inline-label">Currency Symbol:</label>
-                                <span id="currencySymbol"></span>
-                            </div>
-                            <div class="p-1">
-                                <label class="inline-label">Currency:</label>
-                                <span id="currency"></span>
-                            </div>
-                            <div class="p-1">
-                                <label class="inline-label">Population:</label>
-                                <span id="population"></span>
-                            </div>
-                            <div class="p-1">
-                                <label class="inline-label">Capital City:</label>
-                                <span id="capitalCity"></span>
-                            </div>
-                            <div class="p-3" id="exchange-feat">
-                                <div class="input-group flex-nowrap">
-                                    <span class="input-group-text" id="addon-wrapping">Exchange To: </span>
-                                    <input id="exchange-input" type="text" class="form-control" placeholder aria-label="Country Exchange" aria-describedby="addon-wrapping">
-                                    <button id="exchange-btn" type="button" class="btn btn-primary">Go</button>
-                                </div>
-                            </div>
-                            <div class="p-1" id="exchange-results">
-                                <label class="inline-label" id="country1"></label>
-                                <span id="country1Rate"></span>
-                                =
-                                <label class="inline-label" id="country2"></label>
-                                <span id="country2Rate"></span>
-                            </div>
-                        </div>
-                        <div class="col"></div>
-                    </div>
-                </div>
-        </div>
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous">
-        </script>
         <script src="./js/index.js"></script>
-    </body> -->
+    </body>
+
 </html>
