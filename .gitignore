@@ -1,4 +1,4 @@
 node_modules
-scripts/helper**
+utils/*
 data/
 .env
