@@ -111,9 +111,9 @@ travel-one/
   |-- package.json
   |-- public
   |   |-- index.html
-  |   |-- javascripts
+  |   |-- js
   |   |   |-- index.js
-  |   |-- stylesheets
+  |   |-- css
   |       |-- style.css
   |-- routes
   |   |-- country.js
