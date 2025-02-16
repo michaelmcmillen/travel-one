@@ -5,6 +5,9 @@
 - [Development Setup](#development-setup)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
+  - [PORT Modifications](#port-modifications)
+  - [Running The App](#running-the-app)
+  - [Testing the Client](#testing-the-client)
 - [Project Structure](#project-structure)
 
 ## Introduction
@@ -39,7 +42,6 @@ You can run and use the application as it stands by carrying out the below.
     docker-compose up --build
     ```
 5. Open http://localhost:3000 in your web browser.
-<br>
 
 ## Development Setup
 
@@ -92,7 +94,7 @@ Use the following Installation steps to then run the app locally, pointing to th
 2. Set this `PORT` to something other than `3000` i.e. `3001`. You want to be accessing your locally run application whilst developing, instead of the Dockerized version spun up in the previous steps.
 3. Update the `CLIENT_ORIGIN` to match your above `PORT`.
 
-### Running the Server
+### Running the App
 
 1. Start the server:
     ```bash
