@@ -9,11 +9,11 @@
 
 ## Introduction
 
-The travel-one project looks to develop a continuously growing application and the CI/CD pipeline around it. The project is less to do about a feature rich application (however this will come with time), and more around the containerisation, deployment and automated testing around it.
+The travel-one project looks to develop a continuously growing application and an automated pipeline around it. The project is less to do about a feature rich application (however this will come with time), and more around the containerisation, deployment and automated testing around it.
 
-As of October 2024, the application provides key information & data i.e. capital, currency, currency symbol etc based on a users search criteria. Country information is stored in a Postgres DB and queried based upon the input country name.
+The application provides key information & data i.e. capital, currency, currency symbol etc based on a users search criteria. Country and currency information is stored in a Postgres DB and queried based upon the input country name.
 
-A following country input, allows the user to view the currency conversion i.e. USD 1 = GBR 0.76, based on the original search input, and the second search input. This currency conversion is queried from a request to an external [exchange rate API](https://www.exchangerate-api.com).
+A subsequent country input, allows the user to view the currency conversion i.e. USD 1 = GBR 0.76, based on the original search input, and the second search input. This currency conversion is queried from a request to an external [exchange rate API](https://www.exchangerate-api.com).
 
 ## Running The Application
 
@@ -32,11 +32,13 @@ You can run and use the application as it stands by carrying out the below.
     ```bash
     cd di/rec/tory
     ```
-3. Build image and run:
+3. Create a `.env` file similar to the sample one.
+4. Ensure `PORT` is commented out. `PORT` will default to 3000. Using the `PORT` variable is mainly required for development purposes as explained below. 
+4. Build image and run:
     ```bash
     docker-compose up --build
     ```
-4. Open http://localhost:3000 in your web browser.
+5. Open http://localhost:3000 in your web browser.
 <br>
 
 ## Development Setup
@@ -45,14 +47,7 @@ You can run and use the application as it stands by carrying out the below.
 
 #### Dependencies
 
-Depending on how you execute/run this, the below packages are required. The installation steps below will see these installed through <code>npm install</code>
-
-- express
-- knex
-- pg
-- cookie-parser
-- debug
-- nodemon
+Depending on how you execute/run this, there a number of packages are required. The installation steps below will see these installed through <code>npm install</code>
 
 Installation required locally:
 
@@ -63,9 +58,14 @@ Installation required locally:
 
 #### Database
 
-The application requires a Postgres DB to be setup. Currently, for development purposes, you will need to setup your own PG DB, with data and link it to the Express application, for this to work.
+The application requires a Postgres DB to be setup. Instead of setting this up and populating this locally, you can run the above steps to run the application locally. This will create a containerized PostGres DB and populate it with the necessary data.
 
-In the near future, a provided containerised Postgres DB with data initialised will be available to spin up and point your locally running Express app too (such as how it is done if you ran the compose file).
+The population of the DB is carried out by:
+
+- At build time, 2 js scripts are run to pull down data from an external open API and saves these to .csv files
+- When creating the containerized PostGres DB at compose, initialisation runs a set of SQL statements to populate the DB from these .csv files
+
+Use the following Installation steps to then run the app locally, pointing to the Dockerized DB that has been spun up.
 
 ### Installation
 
@@ -86,17 +86,24 @@ In the near future, a provided containerised Postgres DB with data initialised w
     ```bash
     npm install
     ```
+### PORT Modifications
+
+1. Make sure the `PORT` variable in your `.env` file is commented in/is in use.
+2. Set this `PORT` to something other than `3000` i.e. `3001`. You want to be accessing your locally run application whilst developing, instead of the Dockerized version spun up in the previous steps.
+3. Update the `CLIENT_ORIGIN` to match your above `PORT`.
+
 ### Running the Server
 
 1. Start the server:
     ```bash
     nodemon start
     ```
-2. The server will be running at `http://localhost:3000`.
+2. The server will be running at `http://localhost:3001`.
 
 ### Testing the Client
 
-1. Open `http://localhost:3000` in your web browser.
+1. Open `http://localhost:3001` in your web browser.
+2. You should now be able to use the locally running version of the app, but pointing to the Dockerized PostGres DB.
     
 ## Project Structure
 
