@@ -1,21 +1,21 @@
 services:
   app:
-      # Build local Dockerfile
-      build: .
-      container_name: express_container
-      environment:
-        DB_HOST: db
-        DB_USER: ${DB_USER}
-        DB_PASS: ${DB_PASS}
-        DB_NAME: ${DB_NAME}
-        DB_PORT: ${DB_PORT}
-      volumes:
-        # Shared volume with below PG DB
-        - data:/travelone/data
-      depends_on:
+    # Build local Dockerfile
+    build: .
+    container_name: express_container
+    environment:
+      DB_HOST: db
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: ${DB_PORT}
+    volumes:
+      # Shared volume with below PG DB
+      - data:/travelone/data
+    depends_on:
       - db
-      ports:
-        - "3000:3000"
+    ports:
+      - "3000:3000"
 
   db:
     image: postgres:latest

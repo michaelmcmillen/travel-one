@@ -13,7 +13,7 @@ RUN mkdir -p ./data
 # Install dependencies
 RUN npm install
 
-# Run country_data.js script to create country_data.csv data set
+# Run js scripts to create country and currency .csv data sets
 # This is used to populated the PG DB
 RUN node ./db_data/country_data.js
 RUN node ./db_data/currency_data.js

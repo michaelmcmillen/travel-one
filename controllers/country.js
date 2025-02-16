@@ -1,5 +1,6 @@
+// Select country by name
 const get = async (req, res) => {
-    req.db.select('*')
+  req.db.select('*')
     .from('country')
     .where('country', req.params.country)
     .then(response => {
@@ -8,5 +9,5 @@ const get = async (req, res) => {
 };
 
 module.exports = {
-    get
+  get
 };

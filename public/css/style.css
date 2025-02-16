@@ -11,22 +11,27 @@ body {
     font-family: Tahoma, Helvetica, "Arial Unicode MS", sans-serif;
 }
 
-#exchange-feat, #exchange-results{
+#exchange-feat, #exchange-results {
     visibility: hidden;
 }
 
-*:focus {box-shadow: none !important;}
+*:focus {
+    box-shadow: none !important;
+}
 
 .text-start {
-    width: 45%; /* 20% wider */
+    width: 45%;
+    /* 20% wider */
 }
 
 h5 {
-    font-size: 1rem; /* Slightly smaller titles */
+    font-size: 1rem;
+    /* Slightly smaller titles */
 }
 
 label {
-    margin-right: 5px; /* Padding between labels */
+    margin-right: 5px;
+    /* Padding between labels */
     margin-left: 7px;
     margin-bottom: 9px;
     font-size: 14px;
@@ -40,19 +45,28 @@ span {
 }
 
 .btn {
-    font-size: 0.875rem; /* Small buttons */
-    background-color: rgb(72, 72, 72); /* Black background */
-    color: white; /* White text */
+    font-size: 0.875rem;
+    /* Small buttons */
+    background-color: rgb(72, 72, 72);
+    /* Black background */
+    color: white;
+    /* White text */
 }
 
 .form-control {
-    border: none; /* Remove all borders */
-    border-bottom: 2px solid #ccc; /* Add bottom border */
-    border-radius: 0; /* Remove rounded corners */
-    outline: none; /* Remove outline */
+    border: none;
+    /* Remove all borders */
+    border-bottom: 2px solid #ccc;
+    /* Add bottom border */
+    border-radius: 0;
+    /* Remove rounded corners */
+    outline: none;
+    /* Remove outline */
 }
 
 .form-control:focus {
-    border-bottom-color: #007bff; /* Change bottom border color on focus */
-    box-shadow: none; /* Remove box shadow on focus */
+    border-bottom-color: #007bff;
+    /* Change bottom border color on focus */
+    box-shadow: none;
+    /* Remove box shadow on focus */
 }

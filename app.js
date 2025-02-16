@@ -1,10 +1,11 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var app = express();
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const app = express();
 const cors = require('cors');
 
+// Ensures requests are accepted from the client when in development
 app.use(cors({
   origin: `http://localhost:${process.env.CLIENT_ORIGIN}`,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -21,9 +22,9 @@ require("dotenv").config();
 const db = require('./config/db.js')
 
 // Setup routes
-var currencyRouter = require('./routes/currency');
-var countryRouter = require('./routes/country');
-var exchangeRouter = require('./routes/exchange');
+const currencyRouter = require('./routes/currency');
+const countryRouter = require('./routes/country');
+const exchangeRouter = require('./routes/exchange');
 const { config } = require('process');
 
 // Attach DB to all requests
@@ -32,18 +33,18 @@ app.use((req, res, next) => {
   next();
 });
 
-// Endpoints
+// Use routes
 app.use('/currency', currencyRouter);
 app.use('/country', countryRouter);
 app.use('/exchange', exchangeRouter);
 
 // Catch 404s and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // Error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

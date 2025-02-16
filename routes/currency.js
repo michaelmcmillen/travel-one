@@ -1,3 +1,4 @@
+// Route for the currency endpoint
 var express = require('express');
 var currencyRouter = express.Router();
 

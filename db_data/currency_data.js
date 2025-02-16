@@ -32,7 +32,7 @@ async function fetchCurrencyData() {
         const csvFile = '/travelone/data/currency_data.csv';
         const header = 'currency,symbol,code\n';
         const rows = uniqueData.map(row => row.join(',')).join('\n');
-        
+
         fs.writeFileSync(csvFile, header + rows, 'utf8');
         console.log(`Data has been written to ${csvFile}`);
     } catch (error) {

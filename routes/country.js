@@ -1,3 +1,4 @@
+// Route for the country endpoint
 var express = require('express');
 var countryRouter = express.Router();
 
