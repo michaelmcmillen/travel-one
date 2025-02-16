@@ -47,9 +47,9 @@ You can run and use the application as it stands by carrying out the below.
 
 #### Dependencies
 
-Depending on how you execute/run this, there a number of packages are required. The installation steps below will see these installed through <code>npm install</code>
+Depending on how you execute/run this, there a number of packages required. The installation steps below will see these installed through <code>npm install</code>
 
-Installation required locally:
+Installations required locally:
 
 - Node.js
 - npm (Node Package Manager)
@@ -58,12 +58,12 @@ Installation required locally:
 
 #### Database
 
-The application requires a Postgres DB to be setup. Instead of setting this up and populating this locally, you can run the above steps to run the application locally. This will create a containerized PostGres DB and populate it with the necessary data.
+The application requires a Postgres DB to be setup. Instead of setting this up and populating this locally, you can run the above steps to build the dockerized application locally. This will create a containerized PostGres DB and populate it with the necessary data.
 
 The population of the DB is carried out by:
 
-- At build time, 2 js scripts are run to pull down data from an external open API and saves these to .csv files
-- When creating the containerized PostGres DB at compose, initialisation runs a set of SQL statements to populate the DB from these .csv files
+- At build time, 2 JS scripts are run to pull down data from an external open API and saves these to .csv files
+- When initialising the containerized PostGres DB at compose, a set of SQL statements are run to populate the DB from the .csv files
 
 Use the following Installation steps to then run the app locally, pointing to the Dockerized DB that has been spun up.
 
@@ -109,25 +109,31 @@ Use the following Installation steps to then run the app locally, pointing to th
 
 ```bash
 travel-one/
-  |-- README.md
-  |-- app.js
-  |-- db_data
-  |   |-- country_data.js
-  |   |-- init.sql
-  |-- package-lock.json
-  |-- package.json
-  |-- public
-  |   |-- index.html
-  |   |-- js
-  |   |   |-- index.js
-  |   |-- css
-  |       |-- style.css
-  |-- routes
-  |   |-- country.js
-  |   |-- currency.js
-  |   |-- exchange.js
-  |   |-- index.js
-  |   |-- users.js
-  |-- Dockerfile
-  |-- docker-compose.yml
+    |-- Dockerfile
+    |-- README.md
+    |-- app.js
+    |-- bin
+    |   `-- www
+    |-- config
+    |   `-- db.js
+    |-- controllers
+    |   |-- country.js
+    |   |-- currency.js
+    |   `-- exchange.js
+    |-- db_data
+    |   |-- country_data.js
+    |   |-- currency_data.js
+    |   `-- init.sql
+    |-- docker-compose.yml
+    |-- package-lock.json
+    |-- package.json
+    |-- public
+    |   |-- css
+    |   |-- index.html
+    |   `-- js
+    |-- routes
+        |-- country.js
+        |-- currency.js
+        |-- exchange.js
+        `-- index.js
 ```
