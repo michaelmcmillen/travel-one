@@ -7,9 +7,9 @@ body {
     background-color: rgb(255 255 255) !important;
 }
 
-#currency {
+/* #currency {
     font-family: Tahoma, Helvetica, "Arial Unicode MS", sans-serif;
-}
+} */
 
 #exchange-feat, #exchange-results {
     visibility: hidden;
@@ -47,16 +47,33 @@ span {
 .btn {
     font-size: 0.875rem;
     /* Small buttons */
-    background-color: rgb(72, 72, 72);
+    /* background-color: rgb(72, 72, 72); */
+    /* Black background */
+    color: rgb(0, 0, 0);
+    /* White text */
+}
+
+.jumbotron .btn {
+    font-size: 0.875rem;
+    /* Small buttons */
+    background-color: rgba(255, 255, 255, 0);
+    /* Black background */
+    color: rgb(0, 0, 0);
+    /* White text */
+    border-color: rgb(72, 72, 72);
+}
+
+.jumbotron .btn:hover {
+    background-color: rgba(72, 72, 72);
     /* Black background */
     color: white;
     /* White text */
-}
+}   
 
 .form-control {
     border: none;
     /* Remove all borders */
-    border-bottom: 2px solid #ccc;
+    border-bottom: 1px solid #ccc;
     /* Add bottom border */
     border-radius: 0;
     /* Remove rounded corners */
@@ -65,8 +82,83 @@ span {
 }
 
 .form-control:focus {
-    border-bottom-color: #007bff;
+    border-bottom-color: rgba(72, 72, 72, 0.254);
     /* Change bottom border color on focus */
     box-shadow: none;
     /* Remove box shadow on focus */
 }
+
+#country-input, #exchange-input {
+    padding-left: 0rem; /* Or use 0 for absolutely no padding */
+    background-color: transparent;
+    /* background-color: #8fbc8f14; */
+    font-family: 'Merriweather';
+    font-size: 0.95rem;
+    font-weight: 100;
+    color: black;
+    letter-spacing: 0.03rem;
+  }
+
+.btn-sm {
+    --bs-btn-padding-x: 0;
+}
+
+.btn {
+    --bs-btn-padding-x: 0;
+}
+
+.info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    /* padding: 1rem; */
+    border-radius: 0.75rem;
+    /* background-color: #f8f9fa; */
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); */
+  }
+  
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #e1e1e1;
+    padding-bottom: 0.5rem;
+  }
+  
+  .label {
+    font-family: 'DM Serif Text', serif;
+    color: #333;
+  }
+  
+  .value {
+    color: #444;
+    font-weight: 500;
+  }
+
+  .exchange-result-box {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    background-color: #2f682c1f;
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); */
+    font-size: 1rem;
+  }
+  
+  .exchange-result-info-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .label {
+    font-family: 'DM Serif Text', serif;
+    color: #333;
+  }
+  
+  .value {
+    font-weight: 500;
+    color: #444;
+  }
+  
+  

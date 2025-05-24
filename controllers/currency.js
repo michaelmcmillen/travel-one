@@ -1,3 +1,11 @@
+const path = require('path');
+
+// Get the currency page
+const getCurrencyPage = async (req, res) => {
+  const filePath = path.join(__dirname, '../public/currency.html'); // Get the absolute path to the 'currency.html' file
+  res.sendFile(filePath, { title: 'Currency' }); // Send the file using the absolute path
+};
+
 // Select currency symbol based on country
 const getCurrency = async (req, res) => {
   req.db.select('symbol')
@@ -27,6 +35,7 @@ const getCurrencyCode = async (req, res) => {
 };
 
 module.exports = {
+  getCurrencyPage,
   getCurrency,
   getCurrencyCode
 };

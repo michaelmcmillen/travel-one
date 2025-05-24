@@ -93,6 +93,7 @@ Use the following Installation steps to then run the app locally, pointing to th
 1. Make sure the `PORT` variable in your `.env` file is commented in/is in use.
 2. Set this `PORT` to something other than `3000` i.e. `3001`. You want to be accessing your locally run application whilst developing, instead of the Dockerized version spun up in the previous steps.
 3. Update the `CLIENT_ORIGIN` to match your above `PORT`.
+4. Ensure any locally running Postgres DB services are not running/stopped.
 
 ### Running the App
 

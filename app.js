@@ -25,6 +25,8 @@ const db = require('./config/db.js')
 const currencyRouter = require('./routes/currency');
 const countryRouter = require('./routes/country');
 const exchangeRouter = require('./routes/exchange');
+const packingRouter = require('./routes/packing');
+const flightRouter = require('./routes/flight');
 const { config } = require('process');
 
 // Attach DB to all requests
@@ -37,6 +39,8 @@ app.use((req, res, next) => {
 app.use('/currency', currencyRouter);
 app.use('/country', countryRouter);
 app.use('/exchange', exchangeRouter);
+app.use('/packing', packingRouter);
+app.use('/flight', flightRouter);
 
 // Catch 404s and forward to error handler
 app.use(function (req, res, next) {

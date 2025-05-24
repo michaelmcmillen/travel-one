@@ -54,7 +54,7 @@ exchangeInput.addEventListener('keydown', exchangeHandler);
 
 // Func to get currency symbol in its correct format
 const getCurrencySymbol = (country) => {
-    fetch(`http://localhost:3000/currency/${country}`)
+    fetch(`http://localhost:3001/currency/${country}`)
         .then(response => response.json())
         .then(countryData => {
             symbol = countryData[0].symbol;
@@ -78,7 +78,7 @@ const getCurrencySymbol = (country) => {
 
 // Get all country data
 const getCountry = async (country) => {
-    const response = await fetch(`http://localhost:3000/country/${country}`);
+    const response = await fetch(`http://localhost:3001/country/${country}`);
     const countryData = await response.json();
     return countryData;
 }
@@ -96,7 +96,7 @@ const displayExchangeEl = (el) => {
 const exchangeRate = async (countryOne, countryTwo) => {
     let searchCountryCode = await currencyCode(countryOne);
     let exchangeCountryCode = await currencyCode(countryTwo);
-    const response = await fetch(`http://localhost:3000/exchange/${searchCountryCode}/${exchangeCountryCode}`);
+    const response = await fetch(`http://localhost:3001/exchange/${searchCountryCode}/${exchangeCountryCode}`);
     exchangeDatObj = await response.json();
     displayExchangeEl(exchangeResults);
     country1.textContent = `${countryOne} (${searchCountryCode})`;
@@ -114,7 +114,7 @@ const exchangeRate = async (countryOne, countryTwo) => {
 
 // Get countrys currency code
 const currencyCode = async (country) => {
-    const response = await fetch(`http://localhost:3000/currency/code/${country}`);
+    const response = await fetch(`http://localhost:3001/currency/code/${country}`);
     const currencyCode = await response.json();
     return currencyCode[0].code;
 }
