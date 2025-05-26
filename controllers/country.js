@@ -1,13 +1,11 @@
+const countryService = require('../services/countryService')
+
 // Select country by name
-const get = async (req, res) => {
-  req.db.select('*')
-    .from('country')
-    .where('country', req.params.country)
-    .then(response => {
-      res.send(response)
-    })
+const countryData = async (req, res) => {
+  const countryData = await countryService.fetchCountryData(req)
+  res.send(countryData)
 };
 
 module.exports = {
-  get
+  countryData
 };
