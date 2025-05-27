@@ -1,12 +1,11 @@
+const exchangeService = require('../services/exchangeService');
+
 // Selects the exchange rates based on supplied country
-const exchange = async (req, res) => {
-  fetch(`https://open.er-api.com/v6/latest/${req.params.country1}`)
-    .then(response => response.json())
-    .then(data => {
-      res.send(data)
-    })
+const exchangeRate = async (req, res) => {
+  const exchange = await exchangeService.fetchExchangeRate(req.params.country1, req.params.country2);
+  res.send(exchange)
 };
 
 module.exports = {
-  exchange
+  exchangeRate
 };
