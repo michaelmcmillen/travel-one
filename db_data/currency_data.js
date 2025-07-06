@@ -9,7 +9,7 @@ function symbolToHex(symbol) {
 // Fetch data from Rest Countries API
 async function fetchCurrencyData() {
     try {
-        const response = await fetch('https://restcountries.com/v3.1/all');
+        const response = await fetch('https://restcountries.com/v3.1/name/all');
         const countriesData = await response.json();
 
         // Prepare data for CSV

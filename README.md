@@ -6,6 +6,7 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [PORT Modifications](#port-modifications)
+  - [Database Setup](#database-setup)
   - [Running The App](#running-the-app)
   - [Testing the Client](#testing-the-client)
 - [Project Structure](#project-structure)
@@ -36,10 +37,10 @@ You can run and use the application as it stands by carrying out the below.
     cd di/rec/tory
     ```
 3. Create a `.env` file similar to the sample one.
-4. Ensure `PORT` is commented out. `PORT` will default to 3000. Using the `PORT` variable is mainly required for development purposes as explained below. 
+
 4. Build image and run:
     ```bash
-    docker-compose up --build
+    docker-compose -f docker-compose.yml up --build
     ```
 5. Open http://localhost:3000 in your web browser.
 
@@ -60,12 +61,12 @@ Installations required locally:
 
 #### Database
 
-The application requires a Postgres DB to be setup. Instead of setting this up and populating this locally, you can run the above steps to build the dockerized application locally. This will create a containerized PostGres DB and populate it with the necessary data.
+The application requires a PostGres DB to be setup. Instead of setting this up and populating this locally, you can run the following steps which will build and run a containerised Postgres DB. The scripts will also populate it with the necessary data.
 
 The population of the DB is carried out by:
 
-- At build time, 2 JS scripts are run to pull down data from an external open API and saves these to .csv files
-- When initialising the containerized PostGres DB at compose, a set of SQL statements are run to populate the DB from the .csv files
+- Two .js scripts are run to pull down data from an external open API and saves these to .csv files
+- When initialising the containerized PostGres DB, a set of SQL statements are run to populate the DB from the .csv files
 
 Use the following Installation steps to then run the app locally, pointing to the Dockerized DB that has been spun up.
 
@@ -90,29 +91,42 @@ Use the following Installation steps to then run the app locally, pointing to th
     ```
 ### PORT Modifications
 
-1. Make sure the `PORT` variable in your `.env` file is commented in/is in use.
-2. Set this `PORT` to something other than `3000` i.e. `3001`. You want to be accessing your locally run application whilst developing, instead of the Dockerized version spun up in the previous steps.
-3. Update the `CLIENT_ORIGIN` to match your above `PORT`.
-4. Ensure any locally running Postgres DB services are not running/stopped.
+1. Create a .env file similar to the sample one.
+2. Make sure the `DB_PORT` variable in your `.env` file is set to 5433.
+
+### Database Setup
+
+1. Execute the following command. This is the initial request for data required for the DB:
+
+    ```bash
+    docker-compose -f docker-compose.db.yml run --rm db-data
+    ```
+1. Once the above has completed, execute the following. This will run the PostGres DB, and populate it with the data from the previous step:
+
+    ```bash
+    docker-compose -f docker-compose.db.yml up db
+    ```
 
 ### Running the App
 
 1. Start the server:
+
     ```bash
     nodemon start
     ```
-2. The server will be running at `http://localhost:3001`.
+2. The server will be running at `http://localhost:3000`.
 
 ### Testing the Client
 
-1. Open `http://localhost:3001` in your web browser.
+1. Open `http://localhost:3000` in your web browser.
 2. You should now be able to use the locally running version of the app, but pointing to the Dockerized PostGres DB.
     
 ## Project Structure
 
 ```bash
-travel-one/
+travel-one/.
     |-- Dockerfile
+    |-- Dockerfile.db
     |-- README.md
     |-- app.js
     |-- bin
@@ -122,21 +136,39 @@ travel-one/
     |-- controllers
     |   |-- country.js
     |   |-- currency.js
-    |   `-- exchange.js
+    |   |-- exchange.js
+    |   |-- flight.js
+    |   |-- index.js
+    |   `-- packing.js
     |-- db_data
     |   |-- country_data.js
     |   |-- currency_data.js
+    |   |-- generate_data.sh
     |   `-- init.sql
+    |-- docker-compose.db.yml
     |-- docker-compose.yml
     |-- package-lock.json
     |-- package.json
     |-- public
     |   |-- css
+    |   |   `-- style.css
+    |   |-- currency.html
+    |   |-- flight.html
     |   |-- index.html
-    |   `-- js
+    |   |-- js
+    |   |   |-- flight.js
+    |   |   `-- index.js
+    |   `-- packing.html
     |-- routes
-        |-- country.js
-        |-- currency.js
-        |-- exchange.js
-        `-- index.js
+    |   |-- country.js
+    |   |-- currency.js
+    |   |-- exchange.js
+    |   |-- flight.js
+    |   |-- index.js
+    |   `-- packing.js
+    `-- services
+        |-- countryService.js
+        |-- currencyService.js
+        |-- exchangeService.js
+        `-- indexService.js
 ```

@@ -1,0 +1,20 @@
+# Stable version of the Node image
+FROM node:19-bullseye
+
+# Create and change to the working directory
+WORKDIR /travelone
+
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy the JS scripts used to request country/currency data
+COPY db_data/*.js ./db_data/
+
+# Copy DB setup script
+COPY ./db_data/generate_data.sh .
+
+RUN chmod +x generate_data.sh
+
+# Set entrypoint to your script
+ENTRYPOINT ["./generate_data.sh"]

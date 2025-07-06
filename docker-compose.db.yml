@@ -1,0 +1,30 @@
+services:
+
+  db-data:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    container_name: db-data-container
+    volumes:
+      - ./db_data:/travelone/db_data
+      - data:/travelone/data
+
+  db:
+    image: postgres:latest
+    container_name: travel-one-pg-container
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      # Shared volume with Express app
+      - data:/travelone/data
+      # Initialise DB when container is run
+      - ./db_data/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5433:5432"
+    depends_on:
+      - db-data
+
+volumes:
+  data:

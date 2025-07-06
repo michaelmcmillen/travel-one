@@ -4,7 +4,7 @@ const airportInput = document.getElementById('airport-input');
 
 // Function to get all return flight data
 const goReFlight = async (airport) => {
-    const response = await fetch(`http://localhost:3001/flight/${airport}`);
+    const response = await fetch(`http://localhost:3000/flight/${airport}`);
     // const airportData = await response.json()
     dataValue.textContent = response;
 };

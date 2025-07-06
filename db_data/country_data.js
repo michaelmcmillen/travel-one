@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 async function getCountryData() {
-    const url = 'https://restcountries.com/v3.1/all';
+    const url = 'https://restcountries.com/v3.1/name/all';
     try {
         const response = await fetch(url);
         if (response.ok) {
