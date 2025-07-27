@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const cors = require('cors');
 
+app.use('/bulma', express.static(__dirname + '/node_modules/bulma/css'));
+
 // Ensures requests are accepted from the client when in development
 app.use(cors({
   origin: `http://localhost:${process.env.CLIENT_ORIGIN}`,

@@ -3,7 +3,7 @@ var express = require('express');
 var flightRouter = express.Router();
 
 const flightController = require('../controllers/flight')
-flightRouter.get('/', flightController.getFlightPage);
-flightRouter.get('/:airport', flightController.getAirports);
+flightRouter.get('/', flightController.flightPage);
+flightRouter.get('/:city', flightController.flightInspo);
 
 module.exports = flightRouter;
