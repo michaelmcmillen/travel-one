@@ -8,7 +8,7 @@ const flightPage = async (req, res) => {
 
 // Select flight inspiration based on city
 const flightInspo = async (req, res) => {
-  const flightInspo = await flightService.fetchInspo(req)
+  const flightInspo = await flightService.fetchInspo(req.params.city);
   res.send(flightInspo)
 };
 

@@ -1,32 +1,33 @@
+// const { response } = require("express");
+
 const dataValue = document.getElementById('data');
-const goAirportBtn = document.getElementById('go-btn');
-const airportInput = document.getElementById('airport-input');
+const searchCityFlightBtn = document.getElementById('search-btn');
+const airportInput = document.getElementById('input-city');
 
 // Function to get all return flight data
-// Currently hardcoded to MAD foor dev purposes
-const goReFlight = async (city) => {
-    fetch(`http://localhost:3000/flight/MAD`)
-        .then(response => response.json())
-        .then(resp => {
-            // Temp logic to printout flight data to UI
-            if (resp.length === 0) {
-                dataValue.textContent = 'No flights found for this city.';
-            } else {
-                dataValue.innerHTML = '';
-                resp.forEach(flight => {
-                    const flightInfo = document.createElement('div');
-                    flightInfo.textContent = `Flight to ${flight.destination} from ${flight.origin} at ${flight.price.total}`;
-                    dataValue.appendChild(flightInfo);
-                });
-            }
-        })
+const searchCityFlight = async (city) => {
+    const response = await fetch(`http://localhost:3000/flight/${city}`);
+    try {
+        results = await response.json();
+        data = results.data
+        dataValue.innerHTML = '';
+        data.forEach(flight => {
+            const flightInfo = document.createElement('div');
+            flightInfo.textContent = `Flight from ${flight.origin}, to ${flight.destination} at $${flight.price.total}`;
+            dataValue.appendChild(flightInfo);
+        });
+    } catch (error) {
+        console.error('Error fetching flight data:', error);
+        dataValue.textContent = 'No flights found for this city.';
+        return;
+    }
 };
 
 // Execute 'goReFlight' func when Go button is clicked
-const goReFlightHandler = (e) => {
+const searchCityFlightHandler = (e) => {
     if (e.type === 'click' || (e.type === 'keydown' && e.key === 'Enter')) {
-        goReFlight()
+        searchCityFlight(airportInput.value);
     }
 }
 
-goAirportBtn.addEventListener('click', goReFlightHandler);
+searchCityFlightBtn.addEventListener('click', searchCityFlightHandler);

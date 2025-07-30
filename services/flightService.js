@@ -11,9 +11,9 @@ const fetchInspo = async (req, res) => {
     try {
         // Find cheapest destinations from Madrid (currently hardcoded)
         const flights = await amadeus.shopping.flightDestinations.get({
-            origin: "MAD",
+            origin: req,
         })
-        return flights.data
+        return flights
     }
     catch (error) {
         console.error(error);

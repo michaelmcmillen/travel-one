@@ -7,11 +7,26 @@
         <link rel="stylesheet" href="/bulma/bulma.css">
     </head>
     <body>
-        <h1 class="title">Flights</h1>
         <br>
-        <button type="button" id="go-btn">Go</button>
-        <div id="data"></div>
-        <script src="./js/flight.js">           
-        </script>
-    </body>
-</html>
+        <div class="container is-fluid">
+            <div class="fixed-grid has-4-cols">
+                <div class="grid">
+                    <div class="cell"></div>
+                    <div class="cell is-col-span-2">
+                        <h1 class="title">Flights</h1>
+                        <br>
+                        <div class="field">
+                            <input class="input" id="input-city" type="text" placeholder="City" />
+                        </div>
+                        <div class="field">
+                            <button class="button is-light" id="search-btn">Search</button>
+                        </div>
+                        <br>
+                        <div id="data"></div>
+                    </div>
+                    <div class="cell"></div>
+                </div>
+            </div>
+            <script src="./js/flight.js"></script>
+        </body>
+    </html>
