@@ -31,3 +31,4 @@ const searchCityFlightHandler = (e) => {
 }
 
 searchCityFlightBtn.addEventListener('click', searchCityFlightHandler);
+airportInput.addEventListener('keydown', searchCityFlightHandler);
