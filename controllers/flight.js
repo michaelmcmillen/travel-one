@@ -12,7 +12,14 @@ const flightInspo = async (req, res) => {
   res.send(flightInspo)
 };
 
+// TODO: Change this to a location controller
+const flightLocation = async (req, res) => {
+  const flightLocation = await flightService.fetchLocation(req.params.location);
+  res.send(flightLocation)
+};
+
 module.exports = {
   flightPage,
-  flightInspo
+  flightInspo,
+  flightLocation
 };

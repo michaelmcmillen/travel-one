@@ -9,7 +9,6 @@ const fetchFlightPage = async (req, res) => {
 // Fetch flight inspiration data
 const fetchInspo = async (req, res) => {
     try {
-        // Find cheapest destinations from Madrid (currently hardcoded)
         const flights = await amadeus.shopping.flightDestinations.get({
             origin: req,
         })
@@ -20,7 +19,22 @@ const fetchInspo = async (req, res) => {
     };
 }
 
+// TODO: Change this to a location service
+const fetchLocation = async (req, res) => {
+    try {
+        const locations = await amadeus.referenceData.locations.get({
+            keyword: req,
+            subType: "AIRPORT",
+        });
+        return locations
+    }
+    catch (error) {
+        console.error(error);
+    };
+};
+
 module.exports = {
     fetchFlightPage,
-    fetchInspo
+    fetchInspo,
+    fetchLocation
 };
