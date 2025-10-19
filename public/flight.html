@@ -7,19 +7,19 @@
         <link rel="stylesheet" href="/bulma/bulma.css">
     </head>
     <body>
-        <br>
-        <div class="container is-fluid">
-            <div class="fixed-grid has-4-cols">
+        <br><br>
+        <div class="container is-fluid is-family-sans-serif">
+            <div class="fixed-grid has-6-cols">
                 <div class="grid">
                     <div class="cell"></div>
-                    <div class="cell is-col-span-2">
-                        <h1 class="title">Flights</h1>
-                        <br>
+                    <div class="cell is-col-span-4">
+                        <h1 class="title is-3 has-text-weight-normal">Flight Inspiration</h1>
+                        <!-- <br> -->
                         <div class="field">
-                            <input class="input" id="input-city" type="text" placeholder="City" />
+                            <input class="input is-small" id="input-city" type="text" placeholder="City" />
                         </div>
                         <div class="field">
-                            <button class="button is-light" id="search-btn">Search</button>
+                            <button class="button is-light is-small" id="search-btn">Search</button>
                         </div>
                         <br>
                         <div id="data"></div>
@@ -27,6 +27,6 @@
                     <div class="cell"></div>
                 </div>
             </div>
-            <script src="./js/flight.js"></script>
+            <script type="module" src="./js/flight.js"></script>
         </body>
     </html>
