@@ -3,11 +3,12 @@ import { capitalise }  from './common.js';
 const dataValue = document.getElementById('data');
 const searchCityFlightBtn = document.getElementById('search-btn');
 const airportInput = document.getElementById('input-city');
+const budgetInput = document.getElementById('input-budget');
 
 // Function to get all return flight data
-const searchCityFlight = async (city) => {
+const searchCityFlight = async (city, budget) => {
     try {
-        const flight_inspo = await fetch(`http://localhost:3000/flight/city/${city}`);
+        const flight_inspo = await fetch(`http://localhost:3000/flight/city/${city}?budget=${budget}`);
         dataValue.innerHTML = '';
         const inspo = await flight_inspo.json();
         for ( const data of inspo ) {
@@ -16,7 +17,7 @@ const searchCityFlight = async (city) => {
             flightInfo.classList.add('is-size-6')
             const destCity = capitalise(data.city)
             const destCountry = capitalise(data.country)
-            const price = capitalise(data.price)
+            const price = data.price;
             flightInfo.textContent = `${city} > ${destCity}, ${destCountry} : $${price}`;
             dataValue.appendChild(flightInfo);
         }
@@ -31,7 +32,7 @@ const searchCityFlight = async (city) => {
 // Execute 'searchCityFlight' func when Go button is clicked
 const searchCityFlightHandler = (e) => {
     if (e.type === 'click' || (e.type === 'keydown' && e.key === 'Enter')) {
-        searchCityFlight(airportInput.value);
+        searchCityFlight(airportInput.value, budgetInput.value);
     }
 }
 
