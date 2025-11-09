@@ -1,71 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Travel One</title>
-        <link rel="stylesheet" href="/bulma/bulma.css">
-        <link
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TravelOne</title>
+    
+    <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-        <link rel="stylesheet" href="./css/style.css">
-    </head>
+            <link rel="stylesheet" href="./style.css" />
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  </head>
 
-    <body class="d-flex justify-content-center align-items-center vh-100 bg-light">
-        <section class="hero is-fullheight">
-            <!-- Hero head: will stick at the top -->
-            <div class="hero-head">
-                <nav class="navbar">
-                    <div class="container">
-                        <div class="navbar-brand">
-                                <span class="navbar-item">
-                                    <button class="button button is-dark">
-                                        <p class="is-family-code has-text-weight-light">TravelOne</p>
-                                    </button>
-                                </span>
-                            <!-- </span> -->
-                            <!-- </div> -->
-                        </div>
-                        <div id="navbarMenuHeroA" class="navbar-menu">
-                            <div class="navbar-end">
-                                <span class="navbar-item">
-                                    <button class="button is-white">
-                                        <span class="icon is-small">
-                                            <i class="fa fa-envelope-o"></i>
-                                        </span>
-                                        <!-- <span>Contact</span> -->
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-            </div>
+  <body>
+    <div class="container" id="container">
+      <!-- <div class="flight-card">
+        <div class="flight-route">
+          <span class="origin">Amsterdam</span>
+          <span class="arrow">→</span>
+          <span class="destination">Madrid, Spain</span>
+        </div>
+        <div class="flight-price">$152.85</div>
+      </div> -->
+      <!-- Progress bar -->
+      <!-- <div class="progress-bar" id="progressBar"></div> -->
 
-            <!-- Hero content: will be in the middle -->
-            <div class="hero-body">
-                <div class="container has-text-centered">
-                    <p class="title is-size-1 has-text-weight-bold is-family-sans-serif">Plan. Book. Explore.</p>
-                    <p class="subtitle has-text-weight-normal is-size-4">Smart travel inspiration, shaped by your budget.</p>
-                </div>
-            </div>
+      <!-- Home -->
+      <div class="question active" id="q1">
+        <h2 class="inter-1">Plan. Book. Explore&nbsp;<img src="./imgs/airplane.png" width="80px"></h2>
+        <hr>
+        <h3 class="inter-2">Smart travel inspiration, shaped by your budget.</h3>
+        <button class="inter-2" id="start">Start</i></button>
+      </div>
+      
+      <!-- Question 1 -->
+      <div class="question" id="q2">
+        <div class="display-q">
+        <h2 class="inter-1">Where would you like to fly from?&nbsp;</h2>
+        <img class="logo-q" src="./imgs/home.png" width="80px">
+        </div>
+        <hr class="q-hr">
+        <input type="text" id="input-city" placeholder="" />
+        <button class="inter-2" id="search">Next</i></button>
+      </div>
 
-            <footer class="footer">
-                <div class="content has-text-centered">
-                  <p class="footer-text">
-                    <strong>TravelOne</strong> by Michael McMillen.
-                    The source code is licensed
-                    <a href="https://opensource.org/license/mit">MIT</a>. The
-                    website content is licensed
-                    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0//"
-                      >CC BY NC SA 4.0</a
-                    >.
-                  </p>
-                </div>
-              </footer>
+      <!-- Results -->
+      <div class="question results" id="results">
+        <h2 class="inter-1">&nbsp;<img src="./imgs/lightbulb.png" width="80px"></h2>
+        <hr class="q-hr">
+        <!-- <input type="text" id="input-city" placeholder="" /> -->
+        <div id="data">
+          <div class="loading">
+            <img id="results-loading" src="./imgs/loading.png"/>
+          </div>
+        </div>
+        <button class="inter-2" onclick="restart()" id="restart">Restart</i></button>
+        <!-- <button onclick="restart()">Start Again</button> -->
+      </div>
+    </div>
 
-        </section>
-
-    </body>
-
+    <script type="module" src="./js/flight.js"></script>
+  </body>
 </html>

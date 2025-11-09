@@ -1,0 +1,315 @@
+body {
+  font-family: proxima-nova, sans-serif;
+  background-color: #f9f4ef;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+h3 {
+  padding: 0px;
+  margin-top: 13px;
+  margin-bottom: 1rem;
+  color: #716040;
+  font-weight: 400;
+}
+
+.inter-1 {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.inter-2 {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.display-q {
+  display: flex;
+  flex-grow: auto;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.logo-q {
+  padding-bottom: 8px;
+  width: 60px;
+  padding-top: 22px;
+}
+
+.inter-3 {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-size: 1.8rem;
+  font-style: normal;
+}
+
+.container {
+  position: relative;
+  width: 90%;
+  max-width: 1000px;
+  height: 220px;
+  overflow: hidden;
+}
+
+.container-results {
+  height: 60%;
+}
+
+.inspo-card {
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 5px;
+  background-color: #f9bc60;
+  box-shadow: 0 5px 15px -10px #1f123570;
+}
+
+.q-container {
+  position: relative;
+  width: 90%;
+  max-width: 1000px;
+  height: 220px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: #3273dc;
+  width: 0%;
+  transition: width 0.4s ease;
+  border-radius: 4px 4px 0 0;
+}
+
+.question {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  opacity: 0;
+  transform: translateX(100vw);
+  transition: transform 0.6s ease, opacity 0.2s ease;
+}
+
+.question.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.question.slide-out-left {
+  transform: translateX(-100vw);
+  opacity: 0;
+}
+
+.question.slide-out-right {
+  transform: translateX(100vw);
+  opacity: 0;
+}
+
+h2 {
+  margin-bottom: 0rem;
+  font-size: 3rem;
+  margin-top: 0rem;
+  color: #020826;
+}
+
+p {
+  color: #555;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid #001e1dab;
+  margin-bottom: 0.7rem;
+  font-size: 1.2rem;
+  outline: none;
+  transition: border 0.3s ease;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  background-color: #f9f4ef;
+  opacity: 0.7;
+}
+
+button {
+  color: #ffffff;
+  border: none;
+  border-radius: 15px;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.1s ease;
+  font-size: 15px;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+.results {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+#q1 button {
+  position: absolute;
+  padding-bottom: 4px;
+  right: 1px;
+  bottom: 0;
+  transform: translateY(135%);
+  border-radius: 4px;
+  width: 110px;
+  height: 40px;
+  font-weight: 700;
+  background-color: #8c7851;
+  color: #fffffe;
+  /* border: 1px solid #8c7851; */
+}
+
+#q1 button,
+#q2 button,
+#results button {
+  transition: box-shadow 0.5s ease-in-out;
+}
+
+#q2 button {
+  position: absolute;
+  padding-bottom: 4px;
+  right: 1px;
+  bottom: 0;
+  transform: translateY(135%);
+  border-radius: 9px;
+  width: 100px;
+  height: 40px;
+  font-weight: 700;
+  background-color: #8c7851;
+  color: #fffffe;
+}
+
+#results button {
+  position: absolute;
+  padding-bottom: 4px;
+  right: 1px;
+  bottom: 0;
+  transform: translateY(135%);
+  border-radius: 4px;
+  width: 100px;
+  height: 40px;
+  font-weight: 700;
+  background-color: #8c7851;
+  color: #fffffe;
+}
+
+hr {
+  color: #001e1d6a;
+}
+
+.q-hr {
+  opacity: 0;
+}
+
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px / 1 FontAwesome;
+  font-size: 25px;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  size: 90px;
+  color: #001e1d;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  align-content: space-between;
+  flex-direction: column;
+  align-items: center;
+}
+
+#data {
+  height: 463px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#results-loading {
+  width: 40px;
+  animation: rotate 1s infinite linear;
+}
+
+.flight-card:hover {
+  border: 1px solid #0000008a;
+}
+
+.flight-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #00000026;
+  border-radius: 4px;
+  padding: 1rem 1.25rem;
+  margin: 0.5rem 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  height: 50px;
+}
+
+.flight-price {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #716040;
+  text-align: center;
+}
+
+.flight-route {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #020826;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.flight-airline {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #64748b;
+  margin-left: auto;
+}
+
+.arrow {
+  font-weight: 400;
+  color: #64748b;
+  /* slate-500 */
+}
+
+.origin,
+.destination {
+  font-weight: 500;
+}

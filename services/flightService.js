@@ -35,10 +35,14 @@ const fetchInspo = async (req) => {
         // Get inspiration based on iataCode
         const flights = await fetchCheapest(iataCode)
 
+        console.log("\n######## fetchInspo RESULTS START ########\n")
+        console.log(flights)
+        console.log("\n######## fetchInspo RESULTS END ########\n")
+
         // For each iataCode destination, get city, country & price data
         for (x in flights.data) {
             await delay(2000); // Temp delay for testing platform
-            price = Number(flights.data[x].price.total)
+            price = Math.round(Number(flights.data[x].price.total))
             budget = Number(budget);
             destIataCode = flights.data[x].destination
 
@@ -52,9 +56,9 @@ const fetchInspo = async (req) => {
             }
         }
 
-        console.log("\n######## fetchInspo RESULTS START ########\n")
-        console.log(inspoData)
-        console.log("\n######## fetchInspo RESULTS END ########\n")
+        // console.log("\n######## fetchInspo RESULTS START ########\n")
+        // console.log(inspoData)
+        // console.log("\n######## fetchInspo RESULTS END ########\n")
 
         return inspoData
     }
