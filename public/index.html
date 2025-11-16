@@ -1,66 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TravelOne</title>
-    
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-            <link rel="stylesheet" href="./style.css" />
-            <link rel="preconnect" href="https://fonts.googleapis.com">
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-            <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-  </head>
-
-  <body>
-    <div class="container" id="container">
-      <!-- <div class="flight-card">
-        <div class="flight-route">
-          <span class="origin">Amsterdam</span>
-          <span class="arrow">→</span>
-          <span class="destination">Madrid, Spain</span>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TravelOne</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="./style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container" id="container">
+            <!-- Home -->
+            <div class="question active" id="q1">
+                <h2 class="font-format">
+                    Plan. Book. Explore&nbsp;
+                    <img class="icon" src="./imgs/aeroplane.png">
+                </h2>
+                <hr>
+                <h3 class="font-format">
+                    Smart travel inspiration, shaped by your budget.
+                </h3>
+                <button class="font-format" id="start-btn">Start</button>
+            </div>
+            <!-- Origin Question -->
+            <div class="question" id="q2">
+                <div class="question-text">
+                    <h2 class="font-format">Where would you like to fly from?</h2>
+                    <img class="icon-question" src="./imgs/home.png">
+                </div>
+                <hr class="question-hr">
+                <input type="text" id="input-city" placeholder>
+                <button class="font-format" id="search-btn">Next</button>
+            </div>
+            <!-- Results -->
+            <div class="results" id="results">
+                <h2 class="font-format">
+                    <img class="icon" src="./imgs/plane-above-earth.png">
+                </h2>
+                <div id="result-cards">
+                    <div class="loading">
+                        <img id="results-loading" src="./imgs/loading.png">
+                    </div>
+                </div>
+                <button class="font-format" id="restart-btn">Restart</button>
+            </div>
         </div>
-        <div class="flight-price">$152.85</div>
-      </div> -->
-      <!-- Progress bar -->
-      <!-- <div class="progress-bar" id="progressBar"></div> -->
-
-      <!-- Home -->
-      <div class="question active" id="q1">
-        <h2 class="inter-1">Plan. Book. Explore&nbsp;<img src="./imgs/airplane.png" width="80px"></h2>
-        <hr>
-        <h3 class="inter-2">Smart travel inspiration, shaped by your budget.</h3>
-        <button class="inter-2" id="start">Start</i></button>
-      </div>
-      
-      <!-- Question 1 -->
-      <div class="question" id="q2">
-        <div class="display-q">
-        <h2 class="inter-1">Where would you like to fly from?&nbsp;</h2>
-        <img class="logo-q" src="./imgs/home.png" width="80px">
-        </div>
-        <hr class="q-hr">
-        <input type="text" id="input-city" placeholder="" />
-        <button class="inter-2" id="search">Next</i></button>
-      </div>
-
-      <!-- Results -->
-      <div class="question results" id="results">
-        <h2 class="inter-1">&nbsp;<img src="./imgs/lightbulb.png" width="80px"></h2>
-        <hr class="q-hr">
-        <!-- <input type="text" id="input-city" placeholder="" /> -->
-        <div id="data">
-          <div class="loading">
-            <img id="results-loading" src="./imgs/loading.png"/>
-          </div>
-        </div>
-        <button class="inter-2" onclick="restart()" id="restart">Restart</i></button>
-        <!-- <button onclick="restart()">Start Again</button> -->
-      </div>
-    </div>
-
-    <script type="module" src="./js/flight.js"></script>
-  </body>
+        <script type="module" src="./js/flight.js"></script>
+    </body>
 </html>

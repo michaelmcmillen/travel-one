@@ -8,3 +8,7 @@ export const capitalise = (str) => {
       });
     return capitalisedArr.join(' ');
 }
+
+export const createDivWithClass = (className) => {
+  return Object.assign(document.createElement('div'), { className: className });
+}
