@@ -4,7 +4,8 @@ const Amadeus = require('amadeus');
 
 const amadeus = new Amadeus({   
   clientId: `${process.env.AMADEUS_API_KEY}`,
-  clientSecret: `${process.env.AMADEUS_API_SECRET}`
+  clientSecret: `${process.env.AMADEUS_API_SECRET}`,
+  // logLevel: 'debug'
 });
 
 module.exports = amadeus;
