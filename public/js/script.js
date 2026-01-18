@@ -72,19 +72,22 @@ const searchCityFlightHandler = (e) => {
   }
 };
 
-const createResultsPage = async (data) => {
-  const cards = createFlightCards(data);
-  const resultsImg = createElement(
-    "img",
-    "results-header-img",
-    "results-header-img"
-  );
-  resultsImg.src = "./imgs/results-header.png";
-  // resultsHeader.appendChild(resultsImg);
-  fadeInCardsSequentially(cards, resultCards, 500);
+const createResultsButtons = () => {
   const restartButton = createElement("button", "font-format", "restart-btn");
   restartButton.textContent = "Restart";
-  step2.appendChild(restartButton);
+  const constRefreshButton = createElement("img", "font-format", "refresh-btn")
+  constRefreshButton.src = "./imgs/refresh.png"
+  const resultsButtons = createElement("div", "results-btns")
+  resultsButtons.appendChild(restartButton)
+  resultsButtons.appendChild(constRefreshButton)
+  return resultsButtons;
+}
+
+const createResultsPage = async (data) => {
+  const cards = createFlightCards(data);
+  fadeInCardsSequentially(cards, resultCards, 500);
+  const resultsButtons = createResultsButtons()
+  step2.appendChild(resultsButtons);
 };
 
 const fadeInCardsSequentially = async (cards, container, delay = 300) => {

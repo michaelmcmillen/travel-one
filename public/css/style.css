@@ -67,7 +67,9 @@ h3 {
 }
 
 .wrapper {
-  width: 80%;
+  width: 70%;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 #start-btn,
@@ -164,7 +166,7 @@ input[type="text"],
 input[type="number"] {
   width: 99.5%;
   /* border-style: inset; */
-  margin-top: 20px;
+  margin-top: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid #000000b8;
   margin-bottom: 1.5rem;
@@ -189,8 +191,8 @@ input[type="number"] {
 
 #result-cards {
   display: flex;
-  padding-top: 20px;
-  padding-bottom: 30px;
+  /* padding-top: 40px; */
+  padding-bottom: 40px;
   flex-direction: column;
   justify-content: center;
   text-transform: capitalize;
@@ -333,20 +335,20 @@ input[type="number"] {
 #welcomeScreen .welcome-right {
   flex: 1;
   display: flex;
-  flex-grow: 1.5;
-  justify-content: center;
+  /* flex-grow: 1.5; */
+  justify-content: flex-end;
   /* push image to the right */
   align-items: center;
 }
 
 #welcomeScreen .welcome-right img {
-  max-width: 500px;
-  /* height: auto; */
+  max-width: 90%;
+  /* height: max-content; */
   /* border-radius: 12px; */
   /* object-fit: cover; */
-  padding-top: 70px;
-  padding-bottom: 70px;
-  padding-left: 0px;
+  /* padding-top: 50px; */
+  /* padding-bottom: 50px; */
+  /* padding-left: 0px; */
 }
 
 .flight-line {
@@ -378,4 +380,24 @@ input[type="number"] {
   justify-content: flex-start;
 
   align-content: center;
+}
+
+.results-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+#refresh-btn {
+  height: 25px;
+  opacity: 0.6;
+  transition: opacity 0.3s ease-in;
+  cursor: pointer;
+}
+
+#refresh-btn:hover {
+  opacity: 1;
 }
