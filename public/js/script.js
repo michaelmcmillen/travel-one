@@ -18,7 +18,7 @@ const airportInput = document.getElementById("input-city");
 // let controller = new AbortController();
 
 let resultCards = document.getElementById("result-cards");
-let resultsHeader = document.getElementById("results-header");
+// let resultsHeader = document.getElementById("results-header");
 
 // Navigation
 startBtn.onclick = () => {
@@ -45,7 +45,7 @@ function restart() {
   step1.classList.remove("hidden");
   step2.innerHTML = originalStep2HTML;
   resultCards = document.getElementById("result-cards");
-  resultsHeader = document.getElementById("results-header");
+  // resultsHeader = document.getElementById("results-header");
 }
 
 // Function to get all return flight data
@@ -80,7 +80,7 @@ const createResultsPage = async (data) => {
     "results-header-img"
   );
   resultsImg.src = "./imgs/results-header.png";
-  resultsHeader.appendChild(resultsImg);
+  // resultsHeader.appendChild(resultsImg);
   fadeInCardsSequentially(cards, resultCards, 500);
   const restartButton = createElement("button", "font-format", "restart-btn");
   restartButton.textContent = "Restart";
@@ -139,10 +139,15 @@ const createFlightCards = (data) => {
   const cards = [];
   for (let i = 0; i < Math.min(data.length, 5); i++) {
     const flightCard = createElement("div", "flight-card fadeIn");
+
+    const fightCardRow1 = createElement("div", "flight-card-row-1")
     const flightRoute = createElement("div", "flight-route");
     const flightPrice = createElement("div", "flight-price");
-    const flightAirline = createElement("div", "flight-airline");
     const destination = createElement("div", "destination");
+    const flightLine = createElement("div", "flight-line");
+
+    const fightCardRow2 = createElement("div", "flight-card-row-2")
+    const flightAirline = createElement("div", "flight-airline");
 
     const destCity = capitalise(data[i].city);
     const destCountry = capitalise(data[i].country);
@@ -152,10 +157,15 @@ const createFlightCards = (data) => {
     flightAirline.textContent = "Airline BA";
     destination.textContent = `${destCity}, ${destCountry}`;
 
-    flightCard.appendChild(flightRoute);
-    flightCard.appendChild(flightPrice);
-    flightCard.appendChild(flightAirline);
+    flightCard.appendChild(fightCardRow1)
+    fightCardRow1.appendChild(flightRoute);
+    fightCardRow1.appendChild(flightLine);    
+    fightCardRow1.appendChild(flightPrice);
     flightRoute.appendChild(destination);
+
+    flightCard.appendChild(fightCardRow2)
+    fightCardRow2.appendChild(flightAirline);
+
     cards.push(flightCard);
   }
   return cards;

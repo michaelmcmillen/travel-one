@@ -47,8 +47,9 @@ h2 {
 
 h3 {
   padding: 0px;
-  margin-bottom: 23px;
+  margin-bottom: 18px;
   color: #716040;
+  font-size: 1.05em;
   margin-top: 0px;
   font-weight: 400;
 }
@@ -192,9 +193,10 @@ input[type="number"] {
   padding-bottom: 30px;
   flex-direction: column;
   justify-content: center;
+  text-transform: capitalize;
 }
 
-#result-cards > * {
+#result-cards>* {
   transition: all 0.5s ease;
 }
 
@@ -219,38 +221,40 @@ input[type="number"] {
   text-align: center;
 }
 
-.flight-card:hover {
-  border: 1px solid #0000008a;
+.flight-card:hover * {
+  color: #020826c4;
 }
 
 .flight-card {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
-  border: 1px solid #00000024;
-  border-radius: 5px;
-  padding: 1rem 1.25rem;
+  /* border: 1px solid #00000024; */
+  /* border-radius: 5px; */
+  /* padding: 1rem 1.25rem; */
+  padding-top: 0.5rem;
+  padding-bottom: 1.5rem;
   margin: 0.5rem 0;
   transition: all 0.3s ease;
   cursor: pointer;
-  font-family: "Inter", sans-serif;
+  /* font-family: unset; */
+  /* text-transform: capitalize; */
   height: 30px;
+  align-content: space-around;
+  flex-wrap: nowrap;
+  flex-direction: column;
 }
 
 .flight-price {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1rem;
-  font-weight: 600;
-  color: #716040;
-  text-align: center;
+  /* font-size: 0.95rem; */
+  font-weight: 700;
+  color: #020826a6;
+  margin-left: auto;
 }
 
 .flight-route {
   font-size: 1rem;
-  font-weight: 500;
   color: #020826;
   display: flex;
   align-items: center;
@@ -261,7 +265,7 @@ input[type="number"] {
   font-size: 0.95rem;
   font-weight: 500;
   color: #64748b;
-  margin-left: auto;
+  /* margin-left: auto; */
 }
 
 .arrow {
@@ -272,7 +276,10 @@ input[type="number"] {
 
 .origin,
 .destination {
-  font-weight: 500;
+  font-weight: 700;
+  color: #020826a6;
+  text-transform: uppercase;
+  width: max-content;
 }
 
 .fade-in {
@@ -308,15 +315,14 @@ input[type="number"] {
   }
 }
 
-#results-header-img {
+/* #results-header-img {
   width: 100%;
-}
+} */
 
 /* Make the welcome screen a flex container */
 #welcomeScreen {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   flex-wrap: wrap;
 }
 
@@ -328,13 +334,48 @@ input[type="number"] {
   flex: 1;
   display: flex;
   flex-grow: 1.5;
-  justify-content: flex-end;
+  justify-content: center;
   /* push image to the right */
+  align-items: center;
 }
 
 #welcomeScreen .welcome-right img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 12px;
-  object-fit: cover;
+  max-width: 500px;
+  /* height: auto; */
+  /* border-radius: 12px; */
+  /* object-fit: cover; */
+  padding-top: 70px;
+  padding-bottom: 70px;
+  padding-left: 0px;
+}
+
+.flight-line {
+  /* border-bottom: #020826; */
+  width: 100%;
+  border-bottom: 1px solid #02082629;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 6px;
+}
+
+.flight-card-row-1 {
+  display: flex;
+
+  flex-direction: row;
+
+  justify-content: space-between;
+
+  flex-wrap: nowrap;
+
+  padding-bottom: 2px;
+}
+
+.flight-card-row-2 {
+  display: flex;
+
+  flex-direction: row;
+
+  justify-content: flex-start;
+
+  align-content: center;
 }
