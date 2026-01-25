@@ -1,37 +1,106 @@
-import { capitalise, createElement } from "./common.js";
+import { capitalise, createElement } from "./common.js"; // good
 
-const welcomeScreen = document.getElementById("welcomeScreen");
-const startBtn = document.getElementById("start-btn");
+// Homepage
+const homepage = document.getElementById("homepage"); // good
+const startBtn = document.getElementById("start-btn"); // good
 
-const step1 = document.getElementById("step1");
-const searchBtn = document.getElementById("search-btn");
+// Question 1
+const q1 = document.getElementById("q1"); // good
+const cityInput = document.getElementById("input-city"); // good
+const searchBtn = document.getElementById("search-btn"); // good
 
-const step2 = document.getElementById("step2");
-const originalStep2HTML = step2.innerHTML;
+// Results
+const results = document.getElementById("results"); // good
+const resultsOriginalHTML = results.innerHTML; // good
+let resultCards = document.getElementById("result-cards"); // good
 
-const next2 = document.getElementById("next2");
-
-const finalScreen = document.getElementById("finalScreen");
-const summaryText = document.getElementById("summaryText");
-
-const airportInput = document.getElementById("input-city");
 // let controller = new AbortController();
 
-let resultCards = document.getElementById("result-cards");
-// let resultsHeader = document.getElementById("results-header");
+// Homepage Get Started
+startBtn.addEventListener("click", (e) => {
+  homepage.classList.add("hidden");
+  q1.classList.remove("hidden");
+}); // good
 
-// Navigation
-startBtn.onclick = () => {
-  welcomeScreen.classList.add("hidden");
-  step1.classList.remove("hidden");
+// Question 1 Search
+searchBtn.addEventListener("click", (e) => {
+  cityInput.value.trim();
+  searchFlightInspo(cityInput.value, 1000);
+  q1.classList.add("hidden");
+  results.classList.remove("hidden");
+}); // good
+
+// Function to get flight inspiration
+const searchFlightInspo = async (city, budget) => {
+  // controller = new AbortController();
+  // const signal = controller.signal;
+  try {
+    const flightInspo = await fetch(
+      `http://localhost:3000/flight/city/${city}?budget=${budget}`
+    );
+    resultCards.innerHTML = "";
+    const inspo = await flightInspo.json();
+    createResultsPage(inspo);
+  } catch (error) {
+    // TODO: Create error page
+    resultCards.textContent = "No flights found for this city.";
+    return;
+  }
 };
 
-searchBtn.onclick = () => {
-  const name = document.getElementById("input-city").value.trim();
-  if (!name) return alert("Please enter your name.");
-  searchCityFlight(airportInput.value, 1000);
-  step1.classList.add("hidden");
-  step2.classList.remove("hidden");
+// Create results page - Add flight cards & button
+const createResultsPage = async (data) => {
+  const cards = createFlightCards(data);
+  await fadeInCardsSequentially(cards, resultCards, 500);
+  const resultsButtons = createResultsButtons();
+  results.appendChild(resultsButtons);
+};
+
+// Create flight cards for results page
+const createFlightCards = (data) => {
+  const cards = [];
+  for (let i = 0; i < Math.min(data.length, 5); i++) {
+    const flightCard = createElement("div", "flight-card fadeIn");
+
+    const fightCardRow1 = createElement("div", "flight-card-row-1");
+    const fightCardRow2 = createElement("div", "flight-card-row-2");
+
+    const flightDestination = createElement("div", "flight-destination");
+    const flightAirline = createElement("div", "flight-airline");
+    const flightLine = createElement("div", "flight-line");
+    const flightPrice = createElement("div", "flight-price");
+
+    const destCity = capitalise(data[i].destCity);
+    const destCountry = capitalise(data[i].destCountry);
+    const price = data[i].price;
+
+    flightPrice.textContent = `$${price}`;
+    flightAirline.textContent = "Airline BA";
+    flightDestination.textContent = `${destCity}, ${destCountry}`;
+
+    fightCardRow1.appendChild(flightDestination);
+    fightCardRow1.appendChild(flightLine);
+    fightCardRow1.appendChild(flightPrice);
+
+    fightCardRow2.appendChild(flightAirline);
+
+    flightCard.appendChild(fightCardRow1);
+    flightCard.appendChild(fightCardRow2);
+
+    cards.push(flightCard);
+  }
+  return cards;
+};
+
+const createResultsButtons = () => {
+  const restartButton = createElement("button", "", "restart-btn");
+  restartButton.textContent = "Restart";
+  const refreshButton = createElement("img", "", "refresh-btn");
+  refreshButton.src = "./imgs/refresh.png";
+  const resultsButtons = createElement("div", "results-btns");
+  resultsButtons.appendChild(restartButton);
+  resultsButtons.appendChild(refreshButton);
+  return resultsButtons;
 };
 
 document.addEventListener("click", (e) => {
@@ -40,74 +109,31 @@ document.addEventListener("click", (e) => {
   }
 });
 
-function restart() {
-  step2.classList.add("hidden");
-  step1.classList.remove("hidden");
-  step2.innerHTML = originalStep2HTML;
+const restart = () => {
+  results.classList.add("hidden");
+  q1.classList.remove("hidden");
+  results.innerHTML = resultsOriginalHTML;
   resultCards = document.getElementById("result-cards");
-  // resultsHeader = document.getElementById("results-header");
-}
-
-// Function to get all return flight data
-const searchCityFlight = async (city, budget) => {
-  // controller = new AbortController();
-  // const signal = controller.signal;
-  try {
-    const flight_inspo = await fetch(
-      `http://localhost:3000/flight/city/${city}?budget=${budget}`
-    );
-    resultCards.innerHTML = "";
-    const inspo = await flight_inspo.json();
-    createResultsPage(inspo);
-  } catch (error) {
-    resultCards.textContent = "No flights found for this city.";
-    return;
-  }
-};
-
-// Execute 'searchCityFlight' func when Search button is clicked
-const searchCityFlightHandler = (e) => {
-  if (e.type === "click" || (e.type === "keydown" && e.key === "Enter")) {
-    searchCityFlight(airportInput.value, budgetInput.value);
-  }
-};
-
-const createResultsButtons = () => {
-  const restartButton = createElement("button", "font-format", "restart-btn");
-  restartButton.textContent = "Restart";
-  const constRefreshButton = createElement("img", "font-format", "refresh-btn")
-  constRefreshButton.src = "./imgs/refresh.png"
-  const resultsButtons = createElement("div", "results-btns")
-  resultsButtons.appendChild(restartButton)
-  resultsButtons.appendChild(constRefreshButton)
-  return resultsButtons;
-}
-
-const createResultsPage = async (data) => {
-  const cards = createFlightCards(data);
-  fadeInCardsSequentially(cards, resultCards, 500);
-  const resultsButtons = createResultsButtons()
-  step2.appendChild(resultsButtons);
 };
 
 const fadeInCardsSequentially = async (cards, container, delay = 300) => {
   for (let i = 0; i < cards.length; i++) {
     const card = cards[i];
 
-    // 1. Record positions of existing cards
+    // Record positions of existing cards
     const existingCards = Array.from(container.children);
     const firstRects = existingCards.map((c) => c.getBoundingClientRect());
 
-    // 2. Prepare new card for fade-in
+    // Prepare new card for fade-in
     card.classList.add("fade-in");
 
-    // 3. Append new card to DOM
+    // Append new card to DOM
     container.appendChild(card);
 
-    // 4. Record new positions of old cards
+    // Record new positions of old cards
     const lastRects = existingCards.map((c) => c.getBoundingClientRect());
 
-    // 5. Apply FLIP transform to move old cards smoothly
+    // Apply FLIP transform to move old cards smoothly
     existingCards.forEach((c, idx) => {
       const dy = firstRects[idx].top - lastRects[idx].top;
       c.style.transform = `translateY(${dy}px)`;
@@ -129,47 +155,10 @@ const fadeInCardsSequentially = async (cards, container, delay = 300) => {
       });
     });
 
-    // 6. Fade in the new card
+    // Fade in the new card
     requestAnimationFrame(() => card.classList.add("show"));
 
-    // 7. Wait before showing the next card
+    // Wait before showing the next card
     await new Promise((resolve) => setTimeout(resolve, delay));
   }
-};
-
-// Create flight cards for results page
-const createFlightCards = (data) => {
-  const cards = [];
-  for (let i = 0; i < Math.min(data.length, 5); i++) {
-    const flightCard = createElement("div", "flight-card fadeIn");
-
-    const fightCardRow1 = createElement("div", "flight-card-row-1")
-    const flightRoute = createElement("div", "flight-route");
-    const flightPrice = createElement("div", "flight-price");
-    const destination = createElement("div", "destination");
-    const flightLine = createElement("div", "flight-line");
-
-    const fightCardRow2 = createElement("div", "flight-card-row-2")
-    const flightAirline = createElement("div", "flight-airline");
-
-    const destCity = capitalise(data[i].city);
-    const destCountry = capitalise(data[i].country);
-    const price = data[i].price;
-
-    flightPrice.textContent = `$${price}`;
-    flightAirline.textContent = "Airline BA";
-    destination.textContent = `${destCity}, ${destCountry}`;
-
-    flightCard.appendChild(fightCardRow1)
-    fightCardRow1.appendChild(flightRoute);
-    fightCardRow1.appendChild(flightLine);    
-    fightCardRow1.appendChild(flightPrice);
-    flightRoute.appendChild(destination);
-
-    flightCard.appendChild(fightCardRow2)
-    fightCardRow2.appendChild(flightAirline);
-
-    cards.push(flightCard);
-  }
-  return cards;
 };

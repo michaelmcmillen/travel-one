@@ -5,8 +5,6 @@ const cookieParser = require('cookie-parser');
 const app = express();
 const cors = require('cors');
 
-app.use('/bulma', express.static(__dirname + '/node_modules/bulma/css'));
-
 // Ensures requests are accepted from the client when in development
 app.use(cors({
   origin: `http://localhost:${process.env.CLIENT_ORIGIN}`,
@@ -28,6 +26,7 @@ const currencyRouter = require('./routes/currency');
 const countryRouter = require('./routes/country');
 const exchangeRouter = require('./routes/exchange');
 const flightRouter = require('./routes/flight');
+const airportRouter = require('./routes/airport');
 const { config } = require('process');
 
 // Attach DB to all requests
@@ -41,6 +40,7 @@ app.use('/currency', currencyRouter);
 app.use('/country', countryRouter);
 app.use('/exchange', exchangeRouter);
 app.use('/flight', flightRouter);
+app.use('/airport', airportRouter);
 
 // Catch 404s and forward to error handler
 app.use(function (req, res, next) {
