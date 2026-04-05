@@ -2,14 +2,21 @@
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const randDate = () => {
-  let start = new Date(2026, 1, 1);
-  let end = new Date(2026, 2, 0);
-  return (date = new Date(
-    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+const randomDate = (month) => {
+  const startDate = new Date(Date.parse(month.slice(0, 3) + "01 2026"));
+  const startMonthNumeric = startDate.getMonth();
+  const currentYear = new Date().getFullYear();
+  const daysInMonth = new Date(currentYear, startMonthNumeric, 0).getDate();
+  const endDate = new Date(currentYear, startMonthNumeric, daysInMonth);
+
+  const randDate = new Date(
+    startDate.getTime() +
+      Math.random() * (endDate.getTime() - startDate.getTime())
   )
     .toISOString()
-    .split("T")[0]);
+    .split("T")[0];
+
+  return randDate;
 };
 
-module.exports = { delay, randDate };
+module.exports = { delay, randomDate };

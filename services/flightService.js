@@ -1,8 +1,9 @@
 const path = require("path");
 const amadeus = require("../config/amadeus");
 const { delay } = require("../config/common");
-let { randDate } = require("../config/common");
+let { randomDate } = require("../config/common");
 const { fetchAirportDestinations } = require("./airportService");
+const { fetchIataOnCity } = require("./locationService");
 
 // Get the flight page
 const fetchFlightPage = async (req, res) => {
@@ -23,7 +24,7 @@ const fetchInspo = async (req) => {
 
   try {
     // GET iataCode based on city name
-    const iataCode = await fetchIataCodeOnCity(city);
+    const iataCode = await fetchIataOnCity(city);
     // GET all destinations the airport flies too
     const destinationAirports = await fetchAirportDestinations(iataCode);
 
@@ -32,83 +33,26 @@ const fetchInspo = async (req) => {
       // Get random destination airport
       let randIndex = Math.floor(Math.random() * destinationAirports.length);
       let randDestination = destinationAirports[randIndex];
-      console.log("\n######################### Random Destination ####################################\n");
-      console.log(randDestination);
-      console.log("\n#################################################################################\n");
 
-      let date = randDate()
-      console.log("\n######################### Random Date ####################################\n");
-      console.log(date);
-      console.log("\n##########################################################################\n");
+      let date = randomDate("July")
 
       // GET flight offer for origin, destination, date
-      let flights = await fetchCheapest(iataCode, randDestination.iataCode, date);
-      console.log("\n######## fetchFlightOffers : FLIGHT SEARCH OFFER EXAMPLE ########\n");
-      console.log(flights.data[0]);
-      console.log("\n######################################################################\n")
+      let flights = await fetchCheapest(
+        iataCode,
+        randDestination.iataCode,
+        date
+      );
 
-      if ( flights.data.length != 0 ) {
-        let loc = {}
-        loc.destCity = randDestination.name;
-        loc.destCountry = randDestination.address.countryName
+      if (flights.data.length != 0) {
+        let loc = {};
+        loc.destCity = randDestination.name.toLowerCase();
+        loc.destCountry = randDestination.address.countryName.toLowerCase();
         loc.price = flights.data[0].price.total;
-        result.push(loc)
-        console.log(result)
+        result.push(loc);
       }
       await delay(2000);
     }
     return result;
-
-
-
-    // For each iataCode destination, get city, country & price data
-    // for (x in flights.data) {
-    //   await delay(2000); // Temp delay for testing platform
-    //   price = Math.round(Number(flights.data[x].price.total));
-    //   budget = Number(budget);
-    //   destIataCode = flights.data[x].destination;
-
-    //   // Get destination details based on iataCode
-    //   const location = await fetchLocationOnIata(destIataCode);
-
-    //   if (location != undefined && price < budget) {
-    //     location["iataCode"] = destIataCode;
-    //     location["price"] = price;
-    //     inspoData.push(location);
-    //   }
-    // }
-
-    // console.log("\n######## fetchInspo RESULTS START ########\n")
-    // console.log(inspoData)
-    // console.log("\n######## fetchInspo RESULTS END ########\n")
-
-    // return inspoData;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-/**
- * Fetch location data based on city name
- * @param {string} city - City name
- * @returns {string} iataCode
- */
-const fetchIataCodeOnCity = async (city) => {
-  try {
-    const locations = await amadeus.referenceData.locations.cities.get({
-      keyword: city,
-    });
-    // Get correct iataCode for the city searched from response
-    for (x = 0; x < Object.keys(locations.data).length; x++) {
-      if (locations.data[x].name === city && "iataCode" in locations.data[x]) {
-        iataCode = locations.data[x].iataCode;
-        break;
-      }
-    }
-    console.log("\n######## fetchIataCodeOnCity : IATA CODE FOR CITY SEARCHED ########\n");
-    console.log(iataCode);
-    console.log("\n######################################################################\n")
-    return iataCode;
   } catch (error) {
     console.error(error);
   }
@@ -122,62 +66,16 @@ const fetchIataCodeOnCity = async (city) => {
  * price, and links with flightDates and flightOffers
  */
 const fetchCheapest = async (originIataCode, destIataCode, departureDate) => {
-    try {
-      // Find the cheapest flights from SYD to BKK
-      const response = await amadeus.shopping.flightOffersSearch.get({
-        originLocationCode: originIataCode,
-        destinationLocationCode: destIataCode,
-        departureDate: departureDate,
-        adults: "1",
-        nonStop: "true"
-      });
-      console.log("\n######## fetchFlightOffers : FLIGHT SEARCH OFFER EXAMPLE ########\n");
-      console.log(response.data[0]);
-      console.log("\n######################################################################\n")
-      return response;
-    } catch (error) {
-      console.error(error);
-    }
-};
-
-/**
- * Fetch location data based on city name
- * @param {string} city - City name
- * @returns {array} An array of dictionaries for possible locations
- * based on the search. Dictionary includes; type, subType, iataCode,
- * address & geoCode
- */
-const fetchLocationOnCity = async (city) => {
   try {
-    const locations = await amadeus.referenceData.locations.cities.get({
-      keyword: city,
+    // Find the cheapest flights from SYD to BKK
+    const response = await amadeus.shopping.flightOffersSearch.get({
+      originLocationCode: originIataCode,
+      destinationLocationCode: destIataCode,
+      departureDate: departureDate,
+      adults: "1",
+      nonStop: "true",
     });
-    return locations.data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-/**
- * Fetch country and city names based on iataCode
- * @param {string} iataCode
- * @returns {string} country and city
- */
-const fetchLocationOnIata = async (iataCode) => {
-  try {
-    const locations = await amadeus.referenceData.locations.get({
-      subType: "CITY",
-      keyword: iataCode,
-    });
-
-    for (x in locations.data) {
-      location = locations.data[x];
-      if ("iataCode" in location && location.iataCode === iataCode) {
-        country = location.address.countryName;
-        city = location.address.cityName;
-        return { country: country, city: city };
-      }
-    }
+    return response;
   } catch (error) {
     console.error(error);
   }
@@ -187,3 +85,172 @@ module.exports = {
   fetchFlightPage,
   fetchInspo,
 };
+
+// ######## fetchCheapest : EXAMPLE RESPONSE ########
+
+// Response {
+//   headers: {
+//     date: 'Wed, 01 Apr 2026 17:42:28 GMT',
+//     'content-type': 'application/vnd.amadeus+json',
+//     'content-length': '4735',
+//     connection: 'keep-alive',
+//     'ama-internal-message-version': '14.1',
+//     'ama-request-id': '0001VDVUGCTT6R',
+//     'ama-gateway-request-id': 'rrt-090c15e59124a8fea-b-eu-378333-110668052-4',
+//     'access-control-allow-headers': 'origin, x-requested-with, accept, Content-Type, Authorization',
+//     'access-control-max-age': '3628800',
+//     'access-control-allow-methods': '*',
+//     server: 'Amadeus',
+//     'access-control-allow-origin': '*'
+//   },
+//   statusCode: 200,
+//   request: Request {
+//     host: 'test.api.amadeus.com',
+//     port: 443,
+//     ssl: true,
+//     scheme: 'https',
+//     verb: 'GET',
+//     path: '/v2/shopping/flight-offers',
+//     params: {
+//       originLocationCode: 'AMS',
+//       destinationLocationCode: 'MUC',
+//       departureDate: '2026-04-01',
+//       adults: '1',
+//       nonStop: 'true'
+//     },
+//     queryPath: '/v2/shopping/flight-offers?originLocationCode=AMS&destinationLocationCode=MUC&departureDate=2026-04-01&adults=1&nonStop=true',
+//     bearerToken: '58j3ZXnIDfcJI674OFre6jYMAFxe',
+//     clientVersion: '11.0.0',
+//     languageVersion: '22.17.0',
+//     appId: null,
+//     appVersion: null,
+//     headers: {
+//       'User-Agent': 'amadeus-node/11.0.0 node/22.17.0',
+//       Accept: 'application/json, application/vnd.amadeus+json',
+//       Authorization: 'Bearer 58j3ZXnIDfcJI674OFre6jYMAFxe',
+//       'Content-Type': 'application/vnd.amadeus+json'
+//     },
+//     ListHTTPOverride: [
+//       '/v2/shopping/flight-offers',
+//       '/v1/shopping/seatmaps',
+//       '/v1/shopping/availability/flight-availabilities',
+//       '/v2/shopping/flight-offers/prediction',
+//       '/v1/shopping/flight-offers/pricing',
+//       '/v1/shopping/flight-offers/upselling'
+//     ]
+//   },
+//   body: '{"meta":{"count":2,"links":{"self":"https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=AMS&destinationLocationCode=MUC&departureDate=2026-04-01&adults=1&nonStop=true"}},"data":[{"type":"flight-offer","id":"1","source":"GDS","instantTicketingRequired":false,"nonHomogeneous":false,"oneWay":false,"isUpsellOffer":false,"lastTicketingDate":"2026-04-01","lastTicketingDateTime":"2026-04-01","numberOfBookableSeats":9,"itineraries":[{"duration":"PT1H25M","segments":[{"departure":{"iataCode":"AMS","at":"2026-04-01T21:00:00"},"arrival":{"iataCode":"MUC","terminal":"1","at":"2026-04-01T22:25:00"},"carrierCode":"KL","number":"1859","aircraft":{"code":"73H"},"operating":{"carrierCode":"KL"},"duration":"PT1H25M","id":"1","numberOfStops":0,"blacklistedInEU":false}]}],"price":{"currency":"EUR","total":"199.98","base":"92.00","fees":[{"amount":"0.00","type":"SUPPLIER"},{"amount":"0.00","type":"TICKETING"}],"grandTotal":"199.98","additionalServices":[{"amount":"70.00","type":"CHECKED_BAGS"}]},"pricingOptions":{"fareType":["PUBLISHED"],"includedCheckedBagsOnly":false},"validatingAirlineCodes":["AF"],"travelerPricings":[{"travelerId":"1","fareOption":"STANDARD","travelerType":"ADULT","price":{"currency":"EUR","total":"199.98","base":"92.00"},"fareDetailsBySegment":[{"segmentId":"1","cabin":"ECONOMY","fareBasis":"TYS0BALA","brandedFare":"LIGHT","brandedFareLabel":"LIGHT","class":"T","includedCheckedBags":{"quantity":0},"includedCabinBags":{"quantity":1},"amenities":[{"description":"CHECKED BAG 1PC OF 23KG 158CM","isChargeable":true,"amenityType":"BAGGAGE","amenityProvider":{"name":"BrandedFare"}},{"description":"SNACK","isChargeable":false,"amenityType":"MEAL","amenityProvider":{"name":"BrandedFare"}},{"description":"BEVERAGE","isChargeable":false,"amenityType":"MEAL","amenityProvider":{"name":"BrandedFare"}},{"description":"SEAT SELECTION","isChargeable":true,"amenityType":"BRANDED_FARES","amenityProvider":{"name":"BrandedFare"}},{"description":"MILEAGE ACCRUAL","isChargeable":false,"amenityType":"BRANDED_FARES","amenityProvider":{"name":"BrandedFare"}},{"description":"UPGRADE ELIGIBILITY","isChargeable":true,"amenityType":"BRANDED_FARES","amenityProvider":{"name":"BrandedFare"}}]}]}]},{"type":"flight-offer","id":"2","source":"GDS","instantTicketingRequired":false,"nonHomogeneous":false,"oneWay":false,"isUpsellOffer":false,"lastTicketingDate":"2026-04-01","lastTicketingDateTime":"2026-04-01","numberOfBookableSeats":9,"itineraries":[{"duration":"PT1H25M","segments":[{"departure":{"iataCode":"AMS","at":"2026-04-01T21:00:00"},"arrival":{"iataCode":"MUC","terminal":"2","at":"2026-04-01T22:25:00"},"carrierCode":"LH","number":"2309","aircraft":{"code":"32A"},"operating":{"carrierCode":"LH"},"duration":"PT1H25M","id":"2","numberOfStops":0,"blacklistedInEU":false}]}],"price":{"currency":"EUR","total":"324.58","base":"193.00","fees":[{"amount":"0.00","type":"SUPPLIER"},{"amount":"0.00","type":"TICKETING"}],"grandTotal":"324.58","additionalServices":[{"amount":"70.00","type":"CHECKED_BAGS"}]},"pricingOptions":{"fareType":["PUBLISHED"],"includedCheckedBagsOnly":true},"validatingAirlineCodes":["LH"],"travelerPricings":[{"travelerId":"1","fareOption":"STANDARD","travelerType":"ADULT","price":{"currency":"EUR","total":"324.58","base":"193.00"},"fareDetailsBySegment":[{"segmentId":"2","cabin":"ECONOMY","fareBasis":"VEUCLSP9","brandedFare":"CLASSIC","brandedFareLabel":"CLASSIC","class":"V","includedCheckedBags":{"quantity":1},"includedCabinBags":{"quantity":1},"amenities":[{"description":"CATERING ON EUROPE FLTS","isChargeable":true,"amenityType":"MEAL","amenityProvider":{"name":"BrandedFare"}},{"description":"STANDARD SEAT RESERVATION","isChargeable":false,"amenityType":"BRANDED_FARES","amenityProvider":{"name":"BrandedFare"}},{"description":"MILEAGE ACCRUAL","isChargeable":false,"amenityType":"BRANDED_FARES","amenityProvider":{"name":"BrandedFare"}},{"description":"UPGRADE ELIGIBILITY","isChargeable":true,"amenityType":"BRANDED_FARES","amenityProvider":{"name":"BrandedFare"}},{"description":"PREFERRED SEAT RESERVATION","isChargeable":true,"amenityType":"BRANDED_FARES","amenityProvider":{"name":"BrandedFare"}},{"description":"CHANGE BEFORE DEPARTURE","isChargeable":true,"amenityType":"BRANDED_FARES","amenityProvider":{"name":"BrandedFare"}},{"description":"CHANGE AFTER DEPARTURE","isChargeable":true,"amenityType":"BRANDED_FARES","amenityProvider":{"name":"BrandedFare"}}]}]}]}],"dictionaries":{"locations":{"AMS":{"cityCode":"AMS","countryCode":"NL"},"MUC":{"cityCode":"MUC","countryCode":"DE"}},"aircraft":{"32A":"AIRBUS A320 (SHARKLETS)","73H":"BOEING 737-800 (WINGLETS)"},"currencies":{"EUR":"EURO"},"carriers":{"KL":"KLM ROYAL DUTCH AIRLINES","LH":"LUFTHANSA"}}}',
+//   result: {
+//     meta: { count: 2, links: [Object] },
+//     data: [ {
+//   type: 'flight-offer',
+//   id: '1',
+//   source: 'GDS',
+//   instantTicketingRequired: false,
+//   nonHomogeneous: false,
+//   oneWay: false,
+//   isUpsellOffer: false,
+//   lastTicketingDate: '2026-04-01',
+//   lastTicketingDateTime: '2026-04-01',
+//   numberOfBookableSeats: 9,
+//   itineraries: [ { duration: 'PT1H40M', segments: [Array] } ],
+//   price: {
+//     currency: 'EUR',
+//     total: '276.98',
+//     base: '169.00',
+//     fees: [ [Object], [Object] ],
+//     grandTotal: '276.98',
+//     additionalServices: [ [Object] ]
+//   },
+//   pricingOptions: { fareType: [ 'PUBLISHED' ], includedCheckedBagsOnly: false },
+//   validatingAirlineCodes: [ 'AF' ],
+//   travelerPricings: [
+//     {
+//       travelerId: '1',
+//       fareOption: 'STANDARD',
+//       travelerType: 'ADULT',
+//       price: [Object],
+//       fareDetailsBySegment: [Array]
+//     }
+//   ]
+// }
+// , {
+//   type: 'flight-offer',
+//   id: '1',
+//   source: 'GDS',
+//   instantTicketingRequired: false,
+//   nonHomogeneous: false,
+//   oneWay: false,
+//   isUpsellOffer: false,
+//   lastTicketingDate: '2026-04-01',
+//   lastTicketingDateTime: '2026-04-01',
+//   numberOfBookableSeats: 9,
+//   itineraries: [ { duration: 'PT1H40M', segments: [Array] } ],
+//   price: {
+//     currency: 'EUR',
+//     total: '276.98',
+//     base: '169.00',
+//     fees: [ [Object], [Object] ],
+//     grandTotal: '276.98',
+//     additionalServices: [ [Object] ]
+//   },
+//   pricingOptions: { fareType: [ 'PUBLISHED' ], includedCheckedBagsOnly: false },
+//   validatingAirlineCodes: [ 'AF' ],
+//   travelerPricings: [
+//     {
+//       travelerId: '1',
+//       fareOption: 'STANDARD',
+//       travelerType: 'ADULT',
+//       price: [Object],
+//       fareDetailsBySegment: [Array]
+//     }
+//   ]
+// }
+//  ],
+//     dictionaries: {
+//       locations: [Object],
+//       aircraft: [Object],
+//       currencies: [Object],
+//       carriers: [Object]
+//     }
+//   },
+//   data: [
+//     {
+//       type: 'flight-offer',
+//       id: '1',
+//       source: 'GDS',
+//       instantTicketingRequired: false,
+//       nonHomogeneous: false,
+//       oneWay: false,
+//       isUpsellOffer: false,
+//       lastTicketingDate: '2026-04-01',
+//       lastTicketingDateTime: '2026-04-01',
+//       numberOfBookableSeats: 9,
+//       itineraries: [Array],
+//       price: [Object],
+//       pricingOptions: [Object],
+//       validatingAirlineCodes: [Array],
+//       travelerPricings: [Array]
+//     },
+//     {
+//       type: 'flight-offer',
+//       id: '2',
+//       source: 'GDS',
+//       instantTicketingRequired: false,
+//       nonHomogeneous: false,
+//       oneWay: false,
+//       isUpsellOffer: false,
+//       lastTicketingDate: '2026-04-01',
+//       lastTicketingDateTime: '2026-04-01',
+//       numberOfBookableSeats: 9,
+//       itineraries: [Array],
+//       price: [Object],
+//       pricingOptions: [Object],
+//       validatingAirlineCodes: [Array],
+//       travelerPricings: [Array]
+//     }
+//   ],
+//   parsed: true
+// }
+
+// ######################################################################

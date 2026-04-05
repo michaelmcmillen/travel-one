@@ -88,13 +88,13 @@ nav {
 }
 
 .landing-tagline {
-    font-size: clamp(3.5rem, 7vw, 5.5rem);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 700;
     letter-spacing: -5px;
     line-height: 1.0;
     color: var(--text);
     max-width: 1000px;
-    margin-left: -5px;
+    margin-left: -3px;
 }
 
 .landing-sub {
@@ -353,10 +353,26 @@ select:not([value=""]):valid {
     border-radius: 0;
     padding: 22px 0;
     display: flex;
-    align-items: center;
-    transition: background 0.5s;
+    align-items: flex-start;
+    flex-wrap: wrap;
     cursor: pointer;
     transition: border 0.5s;
+}
+
+.card-route {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 6px;
+    padding-top: 2px;
+}
+
+.airline-name {
+    font-size: 0.9rem;
+    color: var(--muted);
+    width: 100%;
+    flex: none;
 }
 
 .flight-card:hover {
@@ -364,18 +380,44 @@ select:not([value=""]):valid {
 }
 
 
+.card-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
 
-.card-route {
+.card-right {
     display: flex;
     align-items: center;
-    gap: 12px;
-    min-width: 180px;
+    /* gap: 24px; */
+    flex-shrink: 0;
+    flex-direction: row;
+    min-width: 250px;
+    /* Add a fixed minimum width */
+    /* Push content to the right */
+    justify-content: flex-end;
 }
+
+.flight-price {
+    font-size: 1.2rem;
+    font-weight: 800;
+    min-width: 110px;
+    /* Increase from 70px to accommodate longer prices */
+    text-align: right;
+    flex-shrink: 0;
+    margin-left: 0px;
+    letter-spacing: -0.9px;
+    color: #3f6c41;
+    margin-top: -2px;
+}
+
 
 .airport-code {
     font-size: 1.1rem;
     font-weight: 600;
     letter-spacing: -0.9px;
+    text-transform: capitalize;
 }
 
 .route-arrow {
@@ -391,31 +433,36 @@ select:not([value=""]):valid {
     flex-shrink: 0;
 }
 
-.airline-name {
-    font-size: 0.9rem;
-    color: var(--muted);
-    flex: 1;
-}
+
 
 .card-badge {
     font-size: 0.65rem;
     font-weight: 700;
-    letter-spacing: 1px;
+    /* border-radius: 5px; */
+    letter-spacing: 0.5px;
     text-transform: uppercase;
     color: var(--muted);
     border: 1px solid var(--border);
-    border-radius: 0;
+    border-radius: 4px;
     padding: 4px 10px;
     flex-shrink: 0;
 }
 
-.flight-price {
-    font-size: 1.2rem;
-    font-weight: 800;
-    min-width: 70px;
-    text-align: right;
-    flex-shrink: 0;
-    margin-left: 24px;
-    letter-spacing: -0.9px;
-    color: #3f6c41;
+.menu {
+
+    display: flex;
+
+    flex-direction: row;
+
+    flex-wrap: nowrap;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 30px;
+
+    font-size: 0.9rem;
+
+    color: #2a2a2a9e;
 }

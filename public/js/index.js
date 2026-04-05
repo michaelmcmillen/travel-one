@@ -1,4 +1,3 @@
-// ── FRAGMENT LOADER ──
 async function loadFragment(id, file) {
   const res = await fetch(`./fragments/${file}`);
   const html = await res.text();
@@ -15,7 +14,6 @@ async function initApp() {
   bindEvents();
 }
 
-// ── PAGE NAV ──
 function showPage(n) {
   document.getElementById("page0").classList.toggle("active", n === 0);
   document.getElementById("page1").classList.toggle("active", n === 1);
@@ -23,86 +21,54 @@ function showPage(n) {
   document.getElementById("page3").classList.toggle("active", n === 3);
 }
 
-// ── BIND EVENTS ── (called after fragments load)
 function bindEvents() {
   document
     .getElementById("start-btn")
     .addEventListener("click", () => showPage(1));
   document
-    .getElementById("next-btn")
-    .addEventListener("click", () => showPage(2));
-  document
-    .getElementById("search-btn")
-    .addEventListener("click", onSearch);
+    .getElementById("origin-btn")
+    .addEventListener("click", (e) => originNext());
+  document.getElementById("search-btn").addEventListener("click", search);
   document
     .getElementById("back-btn")
     .addEventListener("click", () => showPage(1));
 }
 
-// ── INPUTS ──
 function getAirportInput() {
-  return document.getElementById("airport-input").value.trim().toUpperCase();
+  return document.getElementById("city-input").value.trim().toUpperCase();
 }
 
 function getMonthInput() {
   return document.getElementById("month-select").value;
 }
 
-// ── SEARCH ──
-function onSearch() {
-  const airport = "London Heathrow";
-//   if (!airport || !month) {
-//     alert("Please enter an airport and select a month.");
-//     return;
-//   }
+const originNext = () => {
+  cityInput = document.getElementById("city-input");
+  city = cityInput.value.trim();
+  sessionStorage.setItem("city", cityInput.value.trim());
+  showPage(2);
+};
 
-//   const sel = document.getElementById('month-select');
-//   const monthName = sel.options[sel.selectedIndex].text;
-//   document.getElementById('results-meta').textContent = `From ${airport} · ${monthName}`;
-//   renderPlaceholder('Loading…');
+const search = async () => {
+  const airport = sessionStorage.getItem("city");
   showPage(3);
-
-  // ── YOUR BACKEND CALL GOES HERE ──
-  // e.g. fetchFlights(airport, month).then(renderResults);
+  flights = await searchFlightInspo(cityInput.value, 1000);
   setTimeout(() => {
-    renderResults([
-      {
-        origin: airport,
-        destination: "JFK",
-        price: "£349",
-        airline: "British Airways",
-      },
-      {
-        origin: airport,
-        destination: "DXB",
-        price: "£289",
-        airline: "Emirates",
-      },
-      {
-        origin: airport,
-        destination: "CDG",
-        price: "£119",
-        airline: "Air France",
-      },
-      { origin: airport, destination: "AMS", price: "£94", airline: "KLM" },
-      {
-        origin: airport,
-        destination: "FCO",
-        price: "£138",
-        airline: "Alitalia",
-      },
-      {
-        origin: airport,
-        destination: "SIN",
-        price: "£512",
-        airline: "Singapore Airlines",
-      },
-    ]);
+    renderResults(flights);
   }, 800);
-  // ─────────────────────────────────
 }
 
-// ── RENDER ──
+// Function to get flight inspiration
+const searchFlightInspo = async (city, budget) => {
+  // controller = new AbortController();
+  // const signal = controller.signal;
+  const flightInspo = await fetch(
+    `http://localhost:3000/flight/city/${city}?budget=${budget}`
+  );
+  const inspo = await flightInspo.json();
+  return inspo;
+};
+
 function renderResults(flights) {
   const c = document.getElementById("results-container");
   c.innerHTML = "";
@@ -120,34 +86,42 @@ function renderResults(flights) {
     const card = document.createElement("div");
     card.className = "flight-card";
 
+    // Left: route + airline stacked
+    const left = document.createElement("div");
+    left.className = "card-left";
+
     const route = document.createElement("div");
     route.className = "card-route";
     const orig = document.createElement("span");
     orig.className = "airport-code";
-    orig.textContent = f.origin;
+    orig.textContent = sessionStorage.getItem("city");
     const arrow = document.createElement("span");
     arrow.className = "route-arrow";
     arrow.textContent = "→";
     const dest = document.createElement("span");
     dest.className = "airport-code";
-    dest.textContent = f.destination;
+    dest.textContent = f.destCity;
     route.append(orig, arrow, dest);
 
-    const s1 = document.createElement("div");
-    s1.className = "sep";
     const al = document.createElement("div");
     al.className = "airline-name";
-    al.textContent = f.airline;
+    al.textContent = "British Airways";
+
+    left.append(route, al);
+
+    const right = document.createElement("div");
+    right.className = "card-right";
+
     const bd = document.createElement("div");
     bd.className = "card-badge";
     bd.textContent = "Economy";
-    const s2 = document.createElement("div");
-    s2.className = "sep";
     const pr = document.createElement("div");
     pr.className = "flight-price";
     pr.textContent = f.price;
 
-    card.append(route, s1, al, bd, s2, pr);
+    right.append(bd, pr);
+
+    card.append(left, right);
     c.appendChild(card);
   });
 }
@@ -161,11 +135,8 @@ function renderPlaceholder(msg) {
   c.appendChild(p);
 }
 
-
-// Expose for external backend use
 window.getAirportInput = getAirportInput;
 window.getMonthInput = getMonthInput;
 window.renderResults = renderResults;
 
-// ── INIT ──
 initApp();
