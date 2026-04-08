@@ -18,7 +18,7 @@ const fetchFlightPage = async (req, res) => {
  */
 const fetchInspo = async (req) => {
   const { city } = req.params;
-  let { budget } = req.query;
+  const { month } = req.query;
 
   inspoData = [];
 
@@ -34,7 +34,7 @@ const fetchInspo = async (req) => {
       let randIndex = Math.floor(Math.random() * destinationAirports.length);
       let randDestination = destinationAirports[randIndex];
 
-      let date = randomDate("July")
+      let date = randomDate(month)
 
       // GET flight offer for origin, destination, date
       let flights = await fetchCheapest(

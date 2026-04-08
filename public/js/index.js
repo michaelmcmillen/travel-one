@@ -34,42 +34,34 @@ function bindEvents() {
     .addEventListener("click", () => showPage(1));
 }
 
-function getAirportInput() {
-  return document.getElementById("city-input").value.trim().toUpperCase();
-}
-
-function getMonthInput() {
-  return document.getElementById("month-select").value;
-}
-
 const originNext = () => {
-  cityInput = document.getElementById("city-input");
-  city = cityInput.value.trim();
+  const cityInput = document.getElementById("city-input");
   sessionStorage.setItem("city", cityInput.value.trim());
   showPage(2);
 };
 
 const search = async () => {
-  const airport = sessionStorage.getItem("city");
+  const city = sessionStorage.getItem("city");
+  const month = document.getElementById("month-select").value;
   showPage(3);
-  flights = await searchFlightInspo(cityInput.value, 1000);
+  flights = await searchFlightInspo(city, month);
   setTimeout(() => {
     renderResults(flights);
   }, 800);
 }
 
-// Function to get flight inspiration
-const searchFlightInspo = async (city, budget) => {
+const searchFlightInspo = async (city, month) => {
   // controller = new AbortController();
   // const signal = controller.signal;
   const flightInspo = await fetch(
-    `http://localhost:3000/flight/city/${city}?budget=${budget}`
+    `http://localhost:3000/flight/city/${city}?month=${month}`
   );
   const inspo = await flightInspo.json();
   return inspo;
 };
 
 function renderResults(flights) {
+  document.getElementById('loader').style.display = 'none'; // Show
   const c = document.getElementById("results-container");
   c.innerHTML = "";
   if (!flights || !flights.length) {
@@ -86,7 +78,6 @@ function renderResults(flights) {
     const card = document.createElement("div");
     card.className = "flight-card";
 
-    // Left: route + airline stacked
     const left = document.createElement("div");
     left.className = "card-left";
 
@@ -121,7 +112,7 @@ function renderResults(flights) {
 
     right.append(bd, pr);
 
-    card.append(left, right);
+    card.append(left, right);    
     c.appendChild(card);
   });
 }
@@ -130,13 +121,13 @@ function renderPlaceholder(msg) {
   const c = document.getElementById("results-container");
   c.innerHTML = "";
   const p = document.createElement("p");
-  p.className = "state-msg";
+  p.className = "loading-container";
   p.textContent = msg;
   c.appendChild(p);
 }
 
-window.getAirportInput = getAirportInput;
-window.getMonthInput = getMonthInput;
+// window.getAirportInput = getAirportInput;
+// window.getMonthInput = getMonthInput;
 window.renderResults = renderResults;
 
 initApp();
